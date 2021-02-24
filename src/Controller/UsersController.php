@@ -10,7 +10,6 @@ class UsersController extends AbstractController
 {
     /**
      * @Route("/users/{userName}/{password}", name="users")
-     * @Method({"GET"})
      */
     public function userGet(string $userName, string $password): Response
     {

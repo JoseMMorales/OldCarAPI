@@ -10,8 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchController extends AbstractController
 {
     /**
-     * @Route("/search/{brands}/{models}/{kms}/{years}/{sellers}/{price}", name="searchCar")
-     * @Method({"GET"})
+     * @Route("/search/{brands}/{models}/{kms}/{years}/{sellers}/{price}", 
+     *          name="searchCar",
+     *          methods={"GET"},
+     *          requirements={"years"="\d{4}",
+     *                        "price"="\d+",
+     *                        "kms"="\d+"})
      */
     public function search( string $brands= '', string $models= '', int $kms= null, 
                             int $years= null, string $sellers= '', int $price= null ): Response

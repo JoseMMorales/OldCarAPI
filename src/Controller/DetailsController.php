@@ -10,7 +10,6 @@ class DetailsController extends AbstractController
 {
     /**
      * @Route("/details/{id}", name="searchCar")
-     * @Method({"GET"})
      */
     public function details( int $id = null): Response
     {   
