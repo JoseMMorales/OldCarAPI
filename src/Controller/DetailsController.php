@@ -14,9 +14,6 @@ class DetailsController extends AbstractController
      */
     public function details( int $id = null): Response
     {   
-        // $brand = $request->query->get('brand', 'Citroen'); 
-        // $model = $request->query->get('model', ' ');
-
         $idJson = json_encode($id, JSON_PRETTY_PRINT);
 
         return new Response($idJson);
