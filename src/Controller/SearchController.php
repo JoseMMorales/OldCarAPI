@@ -11,12 +11,11 @@ class SearchController extends AbstractController
 {
     /**
      * @Route("/search/{brands}/{models}/{kms}/{years}/{sellers}/{price}", name="searchCar")
+     * @Method({"GET"})
      */
     public function search( string $brands= '', string $models= '', int $kms= null, 
                             int $years= null, string $sellers= '', int $price= null ): Response
     {   
-        // $brand = $request->query->get('brand', 'Citroen'); 
-        // $model = $request->query->get('model', ' ');
 
         $result = [
                     "brand"=>"$brands", 
@@ -27,8 +26,8 @@ class SearchController extends AbstractController
                     "price"=>"$price"
                 ];
 
-        $resultJson = json_encode($result);
+        $resultJson = json_encode($result, JSON_PRETTY_PRINT);
 
-        return new Response("<html><body>Car: JSON: $resultJson </body></html>");
+        return new Response($resultJson);
     }
 }
