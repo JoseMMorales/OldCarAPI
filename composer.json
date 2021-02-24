@@ -1,4 +1,6 @@
 {
+    "name": "oldcar api",
+    "description": "API Oldcar Final Project CodeSpace",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "dev",
