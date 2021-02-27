@@ -80,7 +80,7 @@ class Cars
     private $fifth_image;
 
     /**
-     * @ORM\ManyToOne(targetEntity=users::class, inversedBy="cars")
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="cars")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -244,12 +244,12 @@ class Cars
         return $this;
     }
 
-    public function getUser(): ?users
+    public function getUser(): ?Users
     {
         return $this->user;
     }
 
-    public function setUser(?users $user): self
+    public function setUser(?Users $user): self
     {
         $this->user = $user;
 

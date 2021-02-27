@@ -9,12 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class FillDBController extends AbstractController
 {
     /**
-     * @Route("/fill/d/b", name="fill_d_b")
+     * @Route("/fill", name="fill")
      */
     public function index(): Response
     {
+
+        $message = 'Hello OldCar DB';
         return $this->render('fill_db/index.html.twig', [
-            'controller_name' => 'FillDBController',
+            'controller_name' => $message,
         ]);
     }
 }
