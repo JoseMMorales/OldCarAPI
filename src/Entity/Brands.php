@@ -22,16 +22,16 @@ class Brands
     /**
      * @ORM\Column(type="string", length=32)
      */
-    private $brand_name;
+    private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity=Models::class, mappedBy="brand_name", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Models::class, mappedBy="brands", orphanRemoval=true)
      */
-    private $model_name;
+    private $models;
 
     public function __construct()
     {
-        $this->model_name = new ArrayCollection();
+        $this->models = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -39,14 +39,14 @@ class Brands
         return $this->id;
     }
 
-    public function getBrandName(): ?string
+    public function getBrand(): ?string
     {
-        return $this->brand_name;
+        return $this->brand;
     }
 
-    public function setBrandName(string $brand_name): self
+    public function setBrand(string $brand): self
     {
-        $this->brand_name = $brand_name;
+        $this->brand = $brand;
 
         return $this;
     }
@@ -54,27 +54,27 @@ class Brands
     /**
      * @return Collection|Models[]
      */
-    public function getModelName(): Collection
+    public function getModels(): Collection
     {
-        return $this->model_name;
+        return $this->models;
     }
 
-    public function addModelName(Models $modelName): self
+    public function addModel(Models $model): self
     {
-        if (!$this->model_name->contains($modelName)) {
-            $this->model_name[] = $modelName;
-            $modelName->setBrandName($this);
+        if (!$this->models->contains($model)) {
+            $this->models[] = $model;
+            $model->setBrands($this);
         }
 
         return $this;
     }
 
-    public function removeModelName(Models $modelName): self
+    public function removeModel(Models $model): self
     {
-        if ($this->model_name->removeElement($modelName)) {
+        if ($this->models->removeElement($model)) {
             // set the owning side to null (unless already changed)
-            if ($modelName->getBrandName() === $this) {
-                $modelName->setBrandName(null);
+            if ($model->getBrands() === $this) {
+                $model->setBrands(null);
             }
         }
 
