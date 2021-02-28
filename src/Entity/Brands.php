@@ -15,11 +15,11 @@ class Brands
     /**
      * @var int
      *
-     * @ORM\Column(name="brand_id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $brandId;
+    private $id;
 
     /**
      * @var string
@@ -28,9 +28,9 @@ class Brands
      */
     private $brandName;
 
-    public function getBrandId(): ?int
+    public function getId(): ?int
     {
-        return $this->brandId;
+        return $this->id;
     }
 
     public function getBrandName(): ?string

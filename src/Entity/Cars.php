@@ -103,7 +103,7 @@ class Cars
      *
      * @ORM\ManyToOne(targetEntity="Models")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="model_id", referencedColumnName="model_id")
+     *   @ORM\JoinColumn(name="model_id", referencedColumnName="id")
      * })
      */
     private $model;
@@ -111,7 +111,7 @@ class Cars
     /**
      * @var \Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="Users", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      * })

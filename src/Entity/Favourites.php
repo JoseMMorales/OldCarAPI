@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Favoutires
+ * Favourites
  *
- * @ORM\Table(name="favoutires", indexes={@ORM\Index(name="cars_car_saved", columns={"car_id"}), @ORM\Index(name="users_user_id", columns={"user_id"})})
+ * @ORM\Table(name="favourites", indexes={@ORM\Index(name="cars_car_saved", columns={"car_id"}), @ORM\Index(name="users_user_id", columns={"user_id"})})
  * @ORM\Entity
  */
 class Favourites

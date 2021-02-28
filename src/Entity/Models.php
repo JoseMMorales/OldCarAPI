@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Models
  *
- * @ORM\Table(name="models", indexes={@ORM\Index(name="brand_id", columns={"brand_id"})})
+ * @ORM\Table(name="models", indexes={@ORM\Index(name="models_brands", columns={"brand_id"})})
  * @ORM\Entity
  */
 class Models
@@ -15,11 +15,11 @@ class Models
     /**
      * @var int
      *
-     * @ORM\Column(name="model_id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $modelId;
+    private $id;
 
     /**
      * @var string
@@ -33,14 +33,14 @@ class Models
      *
      * @ORM\ManyToOne(targetEntity="Brands")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="brand_id", referencedColumnName="brand_id")
+     *   @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
      * })
      */
     private $brand;
 
-    public function getModelId(): ?int
+    public function getId(): ?int
     {
-        return $this->modelId;
+        return $this->id;
     }
 
     public function getModelName(): ?string
