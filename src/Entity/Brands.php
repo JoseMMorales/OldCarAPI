@@ -2,82 +2,48 @@
 
 namespace App\Entity;
 
-use App\Repository\BrandsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=BrandsRepository::class)
+ * Brands
+ *
+ * @ORM\Table(name="brands")
+ * @ORM\Entity
  */
 class Brands
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="brand_id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private $brandId;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @var string
+     *
+     * @ORM\Column(name="brand_name", type="string", length=32, nullable=false)
      */
-    private $brand;
+    private $brandName;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Models::class, mappedBy="brands", orphanRemoval=true)
-     */
-    private $models;
-
-    public function __construct()
+    public function getBrandId(): ?int
     {
-        $this->models = new ArrayCollection();
+        return $this->brandId;
     }
 
-    public function getId(): ?int
+    public function getBrandName(): ?string
     {
-        return $this->id;
+        return $this->brandName;
     }
 
-    public function getBrand(): ?string
+    public function setBrandName(string $brandName): self
     {
-        return $this->brand;
-    }
-
-    public function setBrand(string $brand): self
-    {
-        $this->brand = $brand;
+        $this->brandName = $brandName;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Models[]
-     */
-    public function getModels(): Collection
-    {
-        return $this->models;
-    }
 
-    public function addModel(Models $model): self
-    {
-        if (!$this->models->contains($model)) {
-            $this->models[] = $model;
-            $model->setBrands($this);
-        }
-
-        return $this;
-    }
-
-    public function removeModel(Models $model): self
-    {
-        if ($this->models->removeElement($model)) {
-            // set the owning side to null (unless already changed)
-            if ($model->getBrands() === $this) {
-                $model->setBrands(null);
-            }
-        }
-
-        return $this;
-    }
 }

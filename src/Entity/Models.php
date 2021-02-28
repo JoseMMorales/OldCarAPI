@@ -2,100 +2,70 @@
 
 namespace App\Entity;
 
-use App\Repository\ModelsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ModelsRepository::class)
+ * Models
+ *
+ * @ORM\Table(name="models", indexes={@ORM\Index(name="brand_id", columns={"brand_id"})})
+ * @ORM\Entity
  */
 class Models
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="model_id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private $modelId;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @var string
+     *
+     * @ORM\Column(name="model_name", type="string", length=32, nullable=false)
      */
-    private $model;
+    private $modelName;
 
     /**
-     * @ORM\ManyToOne(targetEntity=brands::class, inversedBy="models")
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Brands
+     *
+     * @ORM\ManyToOne(targetEntity="Brands")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="brand_id", referencedColumnName="brand_id")
+     * })
      */
-    private $brands;
+    private $brand;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Cars::class, mappedBy="model")
-     */
-    private $car;
-
-    public function __construct()
+    public function getModelId(): ?int
     {
-        $this->car = new ArrayCollection();
+        return $this->modelId;
     }
 
-    public function getId(): ?int
+    public function getModelName(): ?string
     {
-        return $this->id;
+        return $this->modelName;
     }
 
-    public function getModel(): ?string
+    public function setModelName(string $modelName): self
     {
-        return $this->model;
-    }
-
-    public function setModel(string $model): self
-    {
-        $this->model = $model;
+        $this->modelName = $modelName;
 
         return $this;
     }
 
-    public function getBrands(): ?brands
+    public function getBrand(): ?Brands
     {
-        return $this->brands;
+        return $this->brand;
     }
 
-    public function setBrands(?brands $brands): self
+    public function setBrand(?Brands $brand): self
     {
-        $this->brands = $brands;
+        $this->brand = $brand;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Cars[]
-     */
-    public function getCar(): Collection
-    {
-        return $this->car;
-    }
 
-    public function addCar(Cars $car): self
-    {
-        if (!$this->car->contains($car)) {
-            $this->car[] = $car;
-            $car->setModel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCar(Cars $car): self
-    {
-        if ($this->car->removeElement($car)) {
-            // set the owning side to null (unless already changed)
-            if ($car->getModel() === $this) {
-                $car->setModel(null);
-            }
-        }
-
-        return $this;
-    }
 }

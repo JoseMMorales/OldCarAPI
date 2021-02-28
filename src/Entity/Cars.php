@@ -2,102 +2,125 @@
 
 namespace App\Entity;
 
-use App\Repository\CarsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CarsRepository::class)
+ * Cars
+ *
+ * @ORM\Table(name="cars", indexes={@ORM\Index(name="cars_brands", columns={"model_id"}), @ORM\Index(name="cars_sellers", columns={"user_id"})})
+ * @ORM\Entity
  */
 class Cars
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="car_id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private $carId;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @var bool
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="car_year", type="integer", nullable=false)
      */
-    private $year;
+    private $carYear;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int|null
+     *
+     * @ORM\Column(name="km", type="integer", nullable=true)
      */
     private $km;
 
     /**
-     * @ORM\Column(type="string", length=80)
+     * @var string|null
+     *
+     * @ORM\Column(name="short_description", type="string", length=80, nullable=true)
      */
-    private $short_description;
+    private $shortDescription;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string|null
+     *
+     * @ORM\Column(name="long_description", type="string", length=300, nullable=true)
      */
-    private $long_description;
+    private $longDescription;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="car_price", type="integer", nullable=false)
      */
-    private $price;
+    private $carPrice;
 
     /**
-     * @ORM\ManyToOne(targetEntity=models::class, inversedBy="car")
+     * @var string|null
+     *
+     * @ORM\Column(name="main_image", type="string", length=255, nullable=true)
+     */
+    private $mainImage;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="second_image", type="string", length=255, nullable=true)
+     */
+    private $secondImage;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="third_image", type="string", length=255, nullable=true)
+     */
+    private $thirdImage;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="fourth_image", type="string", length=255, nullable=true)
+     */
+    private $fourthImage;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="fifth_image", type="string", length=255, nullable=true)
+     */
+    private $fifthImage;
+
+    /**
+     * @var \Models
+     *
+     * @ORM\ManyToOne(targetEntity="Models")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="model_id", referencedColumnName="model_id")
+     * })
      */
     private $model;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $main_image;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $second_image;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $third_image;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $fourth_image;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $fifth_image;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="cars")
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
      */
     private $user;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Users::class, mappedBy="favourite")
-     */
-    private $favourite;
-
-    public function __construct()
+    public function getCarId(): ?int
     {
-        $this->favourite = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        return $this->carId;
     }
 
     public function getActive(): ?bool
@@ -112,14 +135,14 @@ class Cars
         return $this;
     }
 
-    public function getYear(): ?int
+    public function getCarYear(): ?int
     {
-        return $this->year;
+        return $this->carYear;
     }
 
-    public function setYear(int $year): self
+    public function setCarYear(int $carYear): self
     {
-        $this->year = $year;
+        $this->carYear = $carYear;
 
         return $this;
     }
@@ -129,7 +152,7 @@ class Cars
         return $this->km;
     }
 
-    public function setKm(int $km): self
+    public function setKm(?int $km): self
     {
         $this->km = $km;
 
@@ -138,108 +161,108 @@ class Cars
 
     public function getShortDescription(): ?string
     {
-        return $this->short_description;
+        return $this->shortDescription;
     }
 
-    public function setShortDescription(string $short_description): self
+    public function setShortDescription(?string $shortDescription): self
     {
-        $this->short_description = $short_description;
+        $this->shortDescription = $shortDescription;
 
         return $this;
     }
 
     public function getLongDescription(): ?string
     {
-        return $this->long_description;
+        return $this->longDescription;
     }
 
-    public function setLongDescription(string $long_description): self
+    public function setLongDescription(?string $longDescription): self
     {
-        $this->long_description = $long_description;
+        $this->longDescription = $longDescription;
 
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getCarPrice(): ?int
     {
-        return $this->price;
+        return $this->carPrice;
     }
 
-    public function setPrice(int $price): self
+    public function setCarPrice(int $carPrice): self
     {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    public function getModel(): ?models
-    {
-        return $this->model;
-    }
-
-    public function setModel(?models $model): self
-    {
-        $this->model = $model;
+        $this->carPrice = $carPrice;
 
         return $this;
     }
 
     public function getMainImage(): ?string
     {
-        return $this->main_image;
+        return $this->mainImage;
     }
 
-    public function setMainImage(string $main_image): self
+    public function setMainImage(?string $mainImage): self
     {
-        $this->main_image = $main_image;
+        $this->mainImage = $mainImage;
 
         return $this;
     }
 
     public function getSecondImage(): ?string
     {
-        return $this->second_image;
+        return $this->secondImage;
     }
 
-    public function setSecondImage(?string $second_image): self
+    public function setSecondImage(?string $secondImage): self
     {
-        $this->second_image = $second_image;
+        $this->secondImage = $secondImage;
 
         return $this;
     }
 
     public function getThirdImage(): ?string
     {
-        return $this->third_image;
+        return $this->thirdImage;
     }
 
-    public function setThirdImage(?string $third_image): self
+    public function setThirdImage(?string $thirdImage): self
     {
-        $this->third_image = $third_image;
+        $this->thirdImage = $thirdImage;
 
         return $this;
     }
 
     public function getFourthImage(): ?string
     {
-        return $this->fourth_image;
+        return $this->fourthImage;
     }
 
-    public function setFourthImage(?string $fourth_image): self
+    public function setFourthImage(?string $fourthImage): self
     {
-        $this->fourth_image = $fourth_image;
+        $this->fourthImage = $fourthImage;
 
         return $this;
     }
 
     public function getFifthImage(): ?string
     {
-        return $this->fifth_image;
+        return $this->fifthImage;
     }
 
-    public function setFifthImage(?string $fifth_image): self
+    public function setFifthImage(?string $fifthImage): self
     {
-        $this->fifth_image = $fifth_image;
+        $this->fifthImage = $fifthImage;
+
+        return $this;
+    }
+
+    public function getModel(): ?Models
+    {
+        return $this->model;
+    }
+
+    public function setModel(?Models $model): self
+    {
+        $this->model = $model;
 
         return $this;
     }
@@ -256,30 +279,5 @@ class Cars
         return $this;
     }
 
-    /**
-     * @return Collection|Users[]
-     */
-    public function getFavourite(): Collection
-    {
-        return $this->favourite;
-    }
 
-    public function addFavourite(Users $favourite): self
-    {
-        if (!$this->favourite->contains($favourite)) {
-            $this->favourite[] = $favourite;
-            $favourite->addFavourite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFavourite(Users $favourite): self
-    {
-        if ($this->favourite->removeElement($favourite)) {
-            $favourite->removeFavourite($this);
-        }
-
-        return $this;
-    }
 }

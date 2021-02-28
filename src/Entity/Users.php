@@ -2,82 +2,77 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=UsersRepository::class)
+ * Users
+ *
+ * @ORM\Table(name="users")
+ * @ORM\Entity
  */
 class Users
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private $userId;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @var bool
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=32, nullable=false)
      */
-    private $name;
+    private $username;
 
     /**
-     * @ORM\Column(type="string", length=32)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=32)
+     * @var int|null
+     *
+     * @ORM\Column(name="password", type="integer", nullable=true)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @var string|null
+     *
+     * @ORM\Column(name="user_address", type="string", length=32, nullable=true)
      */
-    private $address;
+    private $userAddress;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @var string
+     *
+     * @ORM\Column(name="user_city", type="string", length=32, nullable=false)
      */
-    private $city;
+    private $userCity;
 
     /**
-     * @ORM\Column(type="string", length=32, nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="user_phone", type="string", length=32, nullable=true)
      */
-    private $phone;
+    private $userPhone;
 
     /**
-     * @ORM\Column(type="string", length=32, nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="user_type", type="string", length=16, nullable=true)
      */
-    private $type;
+    private $userType;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Cars::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $cars;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=cars::class, inversedBy="favourite")
-     */
-    private $favourite;
-
-    public function __construct()
+    public function getUserId(): ?int
     {
-        $this->cars = new ArrayCollection();
-        $this->favourite = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        return $this->userId;
     }
 
     public function getActive(): ?bool
@@ -92,141 +87,77 @@ class Users
         return $this;
     }
 
-    public function getName(): ?string
+    public function getUsername(): ?string
     {
-        return $this->name;
+        return $this->username;
     }
 
-    public function setName(string $name): self
+    public function setUsername(string $username): self
     {
-        $this->name = $name;
+        $this->username = $username;
 
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
+    public function getPassword(): ?int
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?int $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getUserAddress(): ?string
     {
-        return $this->address;
+        return $this->userAddress;
     }
 
-    public function setAddress(string $address): self
+    public function setUserAddress(?string $userAddress): self
     {
-        $this->address = $address;
+        $this->userAddress = $userAddress;
 
         return $this;
     }
 
-    public function getCity(): ?string
+    public function getUserCity(): ?string
     {
-        return $this->city;
+        return $this->userCity;
     }
 
-    public function setCity(string $city): self
+    public function setUserCity(string $userCity): self
     {
-        $this->city = $city;
+        $this->userCity = $userCity;
 
         return $this;
     }
 
-    public function getPhone(): ?string
+    public function getUserPhone(): ?string
     {
-        return $this->phone;
+        return $this->userPhone;
     }
 
-    public function setPhone(?string $phone): self
+    public function setUserPhone(?string $userPhone): self
     {
-        $this->phone = $phone;
+        $this->userPhone = $userPhone;
 
         return $this;
     }
 
-    public function getType(): ?string
+    public function getUserType(): ?string
     {
-        return $this->type;
+        return $this->userType;
     }
 
-    public function setType(?string $type): self
+    public function setUserType(?string $userType): self
     {
-        $this->type = $type;
+        $this->userType = $userType;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Cars[]
-     */
-    public function getCars(): Collection
-    {
-        return $this->cars;
-    }
 
-    public function addCar(Cars $car): self
-    {
-        if (!$this->cars->contains($car)) {
-            $this->cars[] = $car;
-            $car->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCar(Cars $car): self
-    {
-        if ($this->cars->removeElement($car)) {
-            // set the owning side to null (unless already changed)
-            if ($car->getUser() === $this) {
-                $car->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|cars[]
-     */
-    public function getFavourite(): Collection
-    {
-        return $this->favourite;
-    }
-
-    public function addFavourite(cars $favourite): self
-    {
-        if (!$this->favourite->contains($favourite)) {
-            $this->favourite[] = $favourite;
-        }
-
-        return $this;
-    }
-
-    public function removeFavourite(cars $favourite): self
-    {
-        $this->favourite->removeElement($favourite);
-
-        return $this;
-    }
 }
