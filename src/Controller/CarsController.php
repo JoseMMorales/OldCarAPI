@@ -15,31 +15,35 @@ use Doctrine\ORM\EntityManagerInterface;
 class CarsController extends AbstractController
 {
     /**
-     * @Route("/brands", name="brands")
+     * @Route("/{brand}/{model}", name="brands", methods={"GET"})
      */
-    public function queryBuilder(EntityManagerInterface $em) : Response
+    public function queryBuilder(string $brand = 'Austin', string $model = '', EntityManagerInterface $em) : Response
     {
-        $qb = $em->createQuery( "SELECT u, m
-                                FROM App:Cars u 
-                                JOIN u.model m
-                                WHERE m.modelName = '2CV'");
-        $data = $qb->getResult();
-        $carsArray = [];
+        ($model) ? $modelSQL = "AND m.modelName = '$model'" : $modelSQL = '';
 
-        // var_dump($data);
+        $imageURL = "http://localhost:8000/img/";
+        
+        $response = $em->createQuery(
+                        "SELECT 
+                            c.carId as id,
+                            c.carYear as year, 
+                            c.km as km,
+                            c.shortDescription as description,
+                            c.carPrice as price,
+                            CONCAT('http://localhost:8000/img/' , c.mainImage) as image,
+                            m.modelName as model, 
+                            b.brandName as brand,
+                            u.userType as seller
+                        FROM 
+                            App:Cars c 
+                        JOIN App:Users u WITH c.user = u.userId
+                        JOIN App:Models m WITH c.model = m.id
+                        JOIN App:Brands b WITH m.brand = b.id
+                        WHERE b.brandName = '$brand'
+                        $modelSQL")
+                        
+                        ->getResult();
 
-        foreach ($data as $car) {
-            $carObj = [
-                'id' => $car-> getCarId(),
-                'year' => $car->getCarYear(),
-                'km' => $car->getKm(),
-                'description' => $car->getShortDescription(),
-                'price' => $car->getCarPrice(),
-                'image' => $car->getMainImage(),
-                // 'modelID' => $car->getModel()->getId()
-            ];
-            $carsArray[] = $carObj;
-        }
-        return new JsonResponse($carsArray);
+                        return new JsonResponse($response);
     }
 }
