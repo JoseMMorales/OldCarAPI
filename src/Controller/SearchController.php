@@ -9,15 +9,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\CarsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * @Route("/cars")
- */
-class CarsController extends AbstractController
+class SearchController extends AbstractController
 {
     /**
-     * @Route("/{brand}/{model}", name="brands", methods={"GET"})
+     * @Route("/search/{brand}/{model}", name="brands", methods={"GET"})
      */
-    public function queryBuilder(string $brand = 'Austin', string $model = '', EntityManagerInterface $em) : Response
+    public function queryBuilder(string $brand, string $model = '', EntityManagerInterface $em) : Response
     {
         ($model) ? $modelSQL = "AND m.modelName = '$model'" : $modelSQL = '';
 
@@ -34,8 +31,7 @@ class CarsController extends AbstractController
                             m.modelName as model, 
                             b.brandName as brand,
                             u.userType as seller
-                        FROM 
-                            App:Cars c 
+                        FROM App:Cars c 
                         JOIN App:Users u WITH c.user = u.userId
                         JOIN App:Models m WITH c.model = m.id
                         JOIN App:Brands b WITH m.brand = b.id
