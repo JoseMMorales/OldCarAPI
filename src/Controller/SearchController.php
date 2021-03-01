@@ -40,6 +40,6 @@ class SearchController extends AbstractController
                         
                         ->getResult();
 
-                        return new JsonResponse($response);
+        return new JsonResponse($response);
     }
 }
