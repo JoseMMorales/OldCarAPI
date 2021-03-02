@@ -27,7 +27,7 @@ class SearchController extends AbstractController
                             c.km as km,
                             c.shortDescription as description,
                             c.carPrice as price,
-                            CONCAT('http://localhost:8000/img/' , c.mainImage) as image,
+                            CONCAT('$imageURL' , c.mainImage) as image,
                             m.modelName as model, 
                             b.brandName as brand,
                             u.userType as seller

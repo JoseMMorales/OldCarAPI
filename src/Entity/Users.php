@@ -69,6 +69,12 @@ class Users
      * @ORM\Column(name="user_type", type="string", length=16, nullable=true)
      */
     private $userType;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="user_email", type="string", length=255, nullable=true)
+     */
+    private $userEmail;
 
     public function getUserId(): ?int
     {
@@ -155,6 +161,18 @@ class Users
     public function setUserType(?string $userType): self
     {
         $this->userType = $userType;
+
+        return $this;
+    }
+
+    public function getUserEmail(): ?string
+    {
+        return $this->userEmail;
+    }
+
+    public function setUserEmail(?string $userEmail): self
+    {
+        $this->userEmail = $userEmail;
 
         return $this;
     }

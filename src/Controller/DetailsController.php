@@ -27,9 +27,15 @@ class DetailsController extends AbstractController
                             c.carPrice as price,
                             m.modelName as model, 
                             b.brandName as brand,
+                            CONCAT('$imageURL' , c.mainImage) as mainImage,
+                            CONCAT('$imageURL' , c.secondImage) as secondImage,
+                            CONCAT('$imageURL' , c.thirdImage) as thirdImage,
+                            CONCAT('$imageURL' , c.fourthImage) as fourthImage,
+                            CONCAT('$imageURL' , c.fifthImage) as fifthImage,
                             u.username as sellerName,
                             u.userAddress as sellerAddress,
                             u.userPhone as sellerPhone,
+                            u.userEmail as sellerEmail,
                             u.userType as seller
                         FROM App:Cars c 
                         JOIN App:Users u WITH c.user = u.userId
