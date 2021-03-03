@@ -44,6 +44,4 @@ class Brands
 
         return $this;
     }
-
-
 }
