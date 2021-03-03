@@ -1,15 +1,15 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SearchRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SearchRepository")
  */
 class Search
 {
-   public function searchCars() {
-     return $this->userId;
+   public function getCars() {
+      // etc
    }
 }
