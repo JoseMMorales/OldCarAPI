@@ -75,11 +75,11 @@ class CarsRepository extends ServiceEntityRepository
                             CONCAT('$imageURL' , c.thirdImage) as thirdImage,
                             CONCAT('$imageURL' , c.fourthImage) as fourthImage,
                             CONCAT('$imageURL' , c.fifthImage) as fifthImage,
-                            u.username as sellerName,
-                            u.userAddress as sellerAddress,
-                            u.userPhone as sellerPhone,
-                            u.userEmail as sellerEmail,
-                            u.userType as seller
+                            u.name as sellerName,
+                            u.address as sellerAddress,
+                            u.phone as sellerPhone,
+                            u.email as sellerEmail,
+                            u.type as seller
                         FROM App:Cars c 
                         JOIN App:Users u WITH c.user = u.userId
                         JOIN App:Models m WITH c.model = m.id
