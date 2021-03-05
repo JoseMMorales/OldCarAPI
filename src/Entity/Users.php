@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
+ * @ORM\Table(name="users")
  */
 class Users implements UserInterface
 {
@@ -46,7 +47,7 @@ class Users implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(name="roles", type="json")
      */
     private $roles = [];
 
@@ -118,7 +119,6 @@ class Users implements UserInterface
 
         return $this;
     }
-
 
     /**
      * A visual identifier that represents this user.
