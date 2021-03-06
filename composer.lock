@@ -1977,7 +1977,7 @@
                 "symfony"
             ],
             "support": {
-                "issues": "https://github.com/lexik/LexikJWTAuthenticationBundle/issues",
+                "issues": "https://github.com/lexik/JWTAuthenticationBundle/issues",
                 "source": "https://github.com/lexik/LexikJWTAuthenticationBundle/tree/v2.11.2"
             },
             "funding": [

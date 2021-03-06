@@ -38,3 +38,4 @@ security:
     access_control:
         # - { path: ^/login, roles: ROLE_ADMIN }
         - { path: ^/test, roles: ROLE_USER }
+        # - { path: ^/user, roles: ROLE_USER }
