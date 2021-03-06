@@ -19,7 +19,7 @@ class CarsRepository extends ServiceEntityRepository
         parent::__construct($registry, Cars::class);
     }
 
-    public function searchCars($brand, $model)
+    public function searchCars($brand)
     // , $seller, $km, $year, $price) 
     {
         $imageURL = "http://localhost:8000/img/";
@@ -29,24 +29,24 @@ class CarsRepository extends ServiceEntityRepository
 
         // ($model !== 0) ? $modelDQL = "AND m.modelName = '$model'" : $modelDQL = "WHERE m.modelName = '$model'";
         
-        // return $this->getEntityManager()
-        //         ->createQuery(
-        //             "SELECT 
-        //                 c.carId as id,
-        //                 c.carYear as year, 
-        //                 c.km as km,
-        //                 c.shortDescription as description,
-        //                 c.carPrice as price,
-        //                 CONCAT('$imageURL' , c.mainImage) as image,
-        //                 m.modelName as model, 
-        //                 b.brandName as brand,
-        //                 u.userType as seller
-        //             FROM App:Cars c 
-        //             JOIN App:Users u WITH c.user = u.userId
-        //             JOIN App:Models m WITH c.model = m.id
-        //             JOIN App:Brands b WITH m.brand = b.id
-        //             WHERE $brandDQL = '$variable'")
-        //         ->getResult();
+        return $this->getEntityManager()
+                ->createQuery(
+                    "SELECT 
+                        c.carId as id,
+                        c.carYear as year, 
+                        c.km as km,
+                        c.shortDescription as description,
+                        c.carPrice as price,
+                        CONCAT('$imageURL' , c.mainImage) as image,
+                        m.modelName as model, 
+                        b.brandName as brand,
+                        u.type as seller
+                    FROM App:Cars c 
+                    JOIN App:Users u WITH c.user = u.userId
+                    JOIN App:Models m WITH c.model = m.id
+                    JOIN App:Brands b WITH m.brand = b.id
+                    WHERE b.brandName = '$brand'")
+                ->getResult();
 
         // $query = $this->createQueryBuilder('c')
         //               ->from('App:Cars','c')

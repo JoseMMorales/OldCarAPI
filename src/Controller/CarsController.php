@@ -11,15 +11,15 @@ use App\Repository\CarsRepository;
 class CarsController extends AbstractController
 {
     /**
-     * @Route("/search/{brand}/{model}", 
+     * @Route("/search/{brand}", 
      *         name="route", 
      *         methods={"GET"},
      *         defaults={"brand" = 0, "model" = 0})
      */
-    public function queryBuilder(string $brand, string $model, CarsRepository $carsRepository) : Response
+    public function queryBuilder(string $brand, CarsRepository $carsRepository) : Response
     // , string $seller = '', int $km = null,int $year = null, int $price = null, CarsRepository $carsRepository) : Response
     {
-        $cars= $carsRepository->searchCars($brand, $model);
+        $cars= $carsRepository->searchCars($brand);
         // , $seller, $km, $year, $price);
         return new JsonResponse($cars);
     }
