@@ -36,7 +36,7 @@ class UserController extends AbstractController
     /**
      * @Route("user/add", name="add_user", methods={"POST","GET"})
      */
-    public function addUser(Request $request, EntityManagerInterface $em): Request
+    public function addUser(Request $request, EntityManagerInterface $em): Response
     {
         $username = $request->get('username');
         $email = $request->get('email');
@@ -44,6 +44,44 @@ class UserController extends AbstractController
 
         $user = new Users();
         $user->setActive(1);
+        $user->setName($username);
+        $user->setEmail($email);
+        $user->setPassword($password);
+        $user->setRoles([]);
+
+        $em->persist($user);
+        $em->flush();
+
+        $response = [];
+        $response['id'] = $user-> getUserId();
+        $response['name'] = $user->getName();
+        $response['email'] = $user->getEmail();
+        $response['address'] = $user->getAddress();
+        $response['city'] = $user->getCity();
+        $response['phone'] = $user->getPhone();
+        $response['seller'] = $user->getType();
+        
+        return $this->json($response);
+    }
+
+    /**
+     * @Route("user/update/{id}", name="update_user", methods={"PUT","GET"})
+     */
+    public function updateUser(int $id, Request $request, UsersRepository $repo, EntityManagerInterface $em): Request
+    {
+        $username = $request->get('username');
+        $type = $request->get('type');
+        $email = $request->get('email');
+        $phone = $request->get('phone');
+        $address = $request->get('address');
+        $city = $request->get('city');
+        $password = $request->get('password');
+
+
+        $user = $repo->find($id);
+        $curso->setNombre($cursoArray -> nombre);
+    
+    
         $user->setName('test');
         $user->setEmail('test');
         $user->setPassword('test');
