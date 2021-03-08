@@ -18,11 +18,11 @@ use App\Entity\Users;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/data/{id}", name="data_user", methods={"GET"})
+     * @Route("/data", name="data_user", methods={"GET"})
      */
-    public function user(int $id , UsersRepository $repo): Response
+    public function user(): Response
     {
-        $user = $repo->find($id);
+        $user = $this->getUser();
         
         $userObj = [
             'id' => $user-> getUserId(),
@@ -33,13 +33,12 @@ class UserController extends AbstractController
             'phone' => $user->getPhone(),
             'seller' => $user->getType()
         ];
-        // print_r($userObj['email']);
     
         return new JsonResponse($userObj);
     }
 
     /**
-     * @Route("/add", name="add_user", methods={"POST","GET"})
+     * @Route("/add", name="add_user", methods={"POST"})
      */
     public function addUser(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
@@ -73,78 +72,71 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/update/{id}", name="update_user", methods={"PUT","GET"})
+     * @Route("/update", name="update_user", methods={"POST"})
      */
-    public function updateUser(int $id, Request $request, UsersRepository $repo, EntityManagerInterface $em): Response
+    public function updateUser( Request $request, UsersRepository $repo, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
-        $username = null;
-        // $type = 'Particular';
-        // $username = $request->get('username');
-        // $type = $request->get('type');
-        // $email = $request->get('email');
-        // $phone = $request->get('phone');
-        // $address = $request->get('address');
-        // $city = $request->get('city');
-        // $password = $request->get('password');
+        $username = $request->get('username');
+        $type = $request->get('type');
+        $email = $request->get('email');
+        $phone = $request->get('phone');
+        $address = $request->get('address');
+        $city = $request->get('city');
+        $password = $request->get('password');
 
-        // $bodyRequest = $request->getContent();
-        // $userArray = json_decode($bodyRequest);
+        $user = $this->getUser();
 
-        $user = $repo->find($id);
         // if ($username) {
-        //     echo($username);
-            $user->setName("Test");
-            // $user->setName($userArray -> username);
+            $user->setName($username);
         // };
 
         // if ($type) {
-            // $user->setType("$type");
-            // $user->setType($userArray -> type);
+            $user->setType($type);
         // };
 
         // if ($email) {
-        //     $user->setEmail("$email");
+            $user->setEmail($email);
         // }
         // if ($phone) {
-        //     $user->setPhone("$phone");
+            $user->setPhone($phone);
         // }
         // if ($address) {
-        //     $user->setAddress("$address");
+            $user->setAddress($address);
         // }
         // if ($city) {
-        //     $user->setCity("$city");
+            $user->setCity($city);
         // }
         // if ($password) {
-        //     $user->setPassword("$password");
+            $plainPassword = $password;
+            $encoded = $encoder->encodePassword($user, $plainPassword);
+            $user->setPassword($encoded);
         // }
     
         $em->persist($user);
         $em->flush();
 
-        // $response = [];
-        // $response['id'] = $user-> getUserId();
-        // $response['name'] = $user->getName();
-        // $response['email'] = $user->getEmail();
-        // $response['address'] = $user->getAddress();
-        // $response['city'] = $user->getCity();
-        // $response['phone'] = $user->getPhone();
-        // $response['seller'] = $user->getType();
+        $response = [];
+        $response['id'] = $user-> getUserId();
+        $response['name'] = $user->getName();
+        $response['email'] = $user->getEmail();
+        $response['address'] = $user->getAddress();
+        $response['city'] = $user->getCity();
+        $response['phone'] = $user->getPhone();
+        $response['seller'] = $user->getType();
         
-        return new JsonResponse($user);
+        return new JsonResponse($response);
     }
 
     /**
-     * @Route("/delete/{id}", name="delete_user", methods={"DELETE","GET"})
+     * @Route("/delete", name="delete_user", methods={"DELETE"})
      */
-    public function delete(int $id, UsersRepository $repo, EntityManagerInterface $em): Response
+    public function delete(EntityManagerInterface $em): Response
     {
-        $user = $repo->find($id);
-        $userName = $user->getName();
-
+        $user = $this->getUser();
         $em->remove($user);
         $em->flush();
 
-        $response = [ 'message' => "$userName" ];
+        $response = [ 'message' => 'Account deleted' ];
 
         return new JsonResponse($response); 
     }
