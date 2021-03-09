@@ -3,24 +3,26 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CarsRepository;
 
 class CarsController extends AbstractController
 {
     /**
-     * @Route("/search/{brand}", 
-     *         name="route", 
-     *         methods={"GET"},
-     *         defaults={"brand" = 0, "model" = 0})
+     * @Route("/search", name="route", methods={"GET"})
      */
-    public function queryBuilder(string $brand, CarsRepository $carsRepository) : Response
-    // , string $seller = '', int $km = null,int $year = null, int $price = null, CarsRepository $carsRepository) : Response
+    public function queryBuilder(Request $request, CarsRepository $carsRepository) : Response
+    // int $km ,int $year, int $price
     {
-        $cars= $carsRepository->searchCars($brand);
-        // , $seller, $km, $year, $price);
+        $brand = $request->query->get('brand', 0);
+        $model =  $request->query->get('model', 0);
+        $seller = $request->query->get('seller', 0);
+
+        $cars= $carsRepository->searchCars($brand, $model, $seller);
+        // $km, $year, $price);
         return new JsonResponse($cars);
     }
 
