@@ -27,7 +27,7 @@ class CarsRepository extends ServiceEntityRepository
         $sql_where = "";
 
         if($brand !== 0) {
-            $sql_where .= "AND b.brandName = '$brand' ";
+            $sql_where .=  "AND b.brandName = '$brand' ";
         }
 
         if($model !== 0) {
@@ -39,7 +39,7 @@ class CarsRepository extends ServiceEntityRepository
         }
 
         // Quitar 3 primeros caracteres de $sql_where
-        $sql_where_retocado = substr($sql_where, 3);
+        $sql_where_amended = substr($sql_where, 3);
 
         $sql = "SELECT 
                     c.carId as id,
@@ -55,7 +55,7 @@ class CarsRepository extends ServiceEntityRepository
                 JOIN App:Users u WITH c.user = u.userId
                 JOIN App:Models m WITH c.model = m.id
                 JOIN App:Brands b WITH m.brand = b.id
-                WHERE $sql_where_retocado";
+                WHERE $sql_where_amended";
 
         return $this->getEntityManager()
                 ->createQuery($sql)
