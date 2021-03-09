@@ -40,7 +40,7 @@ class UserController extends AbstractController
     /**
      * @Route("/add", name="add_user", methods={"POST"})
      */
-    public function addUser(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
+    public function addUser( Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
         $username = $request->get('username');
         $email = $request->get('email');
@@ -83,34 +83,20 @@ class UserController extends AbstractController
         $address = $request->get('address');
         $city = $request->get('city');
         $password = $request->get('password');
-
+        
         $user = $this->getUser();
+        $user->setName($username);
+        $user->setType($type);
+        $user->setEmail($email);
+        $user->setPhone($phone);
+        $user->setAddress($address);
+        $user->setCity($city);
 
-        // if ($username) {
-            $user->setName($username);
-        // };
-
-        // if ($type) {
-            $user->setType($type);
-        // };
-
-        // if ($email) {
-            $user->setEmail($email);
-        // }
-        // if ($phone) {
-            $user->setPhone($phone);
-        // }
-        // if ($address) {
-            $user->setAddress($address);
-        // }
-        // if ($city) {
-            $user->setCity($city);
-        // }
-        // if ($password) {
+        if ($password) {
             $plainPassword = $password;
             $encoded = $encoder->encodePassword($user, $plainPassword);
             $user->setPassword($encoded);
-        // }
+        }
     
         $em->persist($user);
         $em->flush();
