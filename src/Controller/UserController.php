@@ -31,7 +31,7 @@ class UserController extends AbstractController
             'address' => $user->getAddress(),
             'city' => $user->getCity(),
             'phone' => $user->getPhone(),
-            'seller' => $user->getType()
+            'type' => $user->getType()
         ];
     
         return new JsonResponse($userObj);
@@ -66,7 +66,7 @@ class UserController extends AbstractController
         $response['address'] = $user->getAddress();
         $response['city'] = $user->getCity();
         $response['phone'] = $user->getPhone();
-        $response['seller'] = $user->getType();
+        $response['type'] = $user->getType();
         
         return $this->json($response);
     }
@@ -122,7 +122,7 @@ class UserController extends AbstractController
         $response['address'] = $user->getAddress();
         $response['city'] = $user->getCity();
         $response['phone'] = $user->getPhone();
-        $response['seller'] = $user->getType();
+        $response['type'] = $user->getType();
         
         return new JsonResponse($response);
     }
