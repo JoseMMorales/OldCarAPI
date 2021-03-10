@@ -38,7 +38,10 @@ class CarsRepository extends ServiceEntityRepository
             $sql_where .= "AND u.type = '$seller' ";
         }
 
-        // Quitar 3 primeros caracteres de $sql_where
+        if (!$brand && !$model && !$seller) {
+            $sql_where .= "AND c.carId in (63, 1, 36, 19, 65)";
+        }
+
         $sql_where_amended = substr($sql_where, 3);
 
         $sql = "SELECT 
