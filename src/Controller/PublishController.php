@@ -24,18 +24,12 @@ class PublishController extends AbstractController
 
         $brand = $request->get('brand');
         $model = $request->get('model');
-        // $km = $request->get('km');
-        // $price = $request->get('price');
-        // $year = $request->get('year');
-        // $shortDescription = $request->get('shortDescription');
-        // $longDescription = $request->get('longDescription');
+        $km = $request->get('km');
+        $price = $request->get('price');
+        $year = $request->get('year');
+        $shortDescription = $request->get('shortDescription');
+        $longDescription = $request->get('longDescription');
         $files = $request->files->get('files');
-
-        $mainFileName = 0;
-
-        if ($files[0]) {
-            $mainFileName = "$brand"."/$model"."/IMG1.jpg";
-        }
 
         $user = new Users();
         $user->setActive(0);
@@ -46,7 +40,7 @@ class PublishController extends AbstractController
         $user->setCity($city);
         $user->setType($type);
         $user->setRoles([]);
-
+        
         $car = new Cars();
         $car->setActive(0);
         $car->setCarYear($year);
@@ -54,11 +48,33 @@ class PublishController extends AbstractController
         $car->setShortDescription($shortDescription);
         $car->setLongDescription($longDescription);
         $car->setCarPrice($price);
+
+        $em->persist($contact);
+        $em->flush();
+
+        $mainFileName = 0;
+
+        if ($files[0]) {
+            $mainFileName = "$brand"."/$model"."/IMG1.jpg";
+        }
+        if ($files[1]) {
+            $mainFileName = "$brand"."/$model"."/IMG2.jpg";
+        }
+        if ($files[2]) {
+            $mainFileName = "$brand"."/$model"."/IMG1.jpg";
+        }
+        if ($files[3]) {
+            $mainFileName = "$brand"."/$model"."/IMG1.jpg";
+        }
+        if ($files[4]) {
+            $mainFileName = "$brand"."/$model"."/IMG1.jpg";
+        }
+
         $car->setMainImage($files[0]);
-        // $car->setSecondImage($files[1]);
-        // $car->setThirdImage($files[2]);
-        // $car->getFourthImage($files[3]);
-        // $car->setFifthImage($files[4]);
+        $car->setSecondImage($files[1]);
+        $car->setThirdImage($files[2]);
+        $car->getFourthImage($files[3]);
+        $car->setFifthImage($files[4]);
 
         $em->persist($contact);
         $em->flush();
