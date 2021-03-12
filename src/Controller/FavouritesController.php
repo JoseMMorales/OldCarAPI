@@ -4,28 +4,26 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use App\Repository\FavouritesRepository;
+use App\Repository\UsersRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FavouritesController extends AbstractController
 {
     /**
-     * @Route("/favourites", name="favourites", methods={"GET"})
+     * @Route("/favourites/{id}", name="favourites")
      */
-    public function favourites(FavouritesRepository $repo): Response
+    public function favourites(int $id, UsersRepository $repo): Response
     {
-        $car = $this->getUser();
-        
-        $userObj = [
-            'id' => $user-> getUserId(),
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'address' => $user->getAddress(),
-            'city' => $user->getCity(),
-            'phone' => $user->getPhone(),
-            'type' => $user->getType()
+        $favourites = $repo->find($id);
+
+        if ($curso === null) {
+            throw $this->createNotFoundException('Favourite not found, please try again!!');
+        };
+
+        $favouritesObj = [
+
         ];
-    
-        return new JsonResponse($userObj);
+
+        return $this->json($favouritesObj);
     }
 }
