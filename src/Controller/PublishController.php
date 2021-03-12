@@ -35,6 +35,7 @@ class PublishController extends AbstractController
         $address = $request->get('address');
         $city = $request->get('city');
         $type = $request->get('type');
+        
         $brand = $request->get('brand');
         $model = $request->get('model');
         $km = $request->get('km');

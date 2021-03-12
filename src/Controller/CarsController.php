@@ -15,14 +15,16 @@ class CarsController extends AbstractController
      * @Route("/search", name="route", methods={"GET"})
      */
     public function queryBuilder(Request $request, CarsRepository $carsRepository) : Response
-    // int $km ,int $year, int $price
     {
         $brand = $request->query->get('brand', 0);
         $model =  $request->query->get('model', 0);
         $seller = $request->query->get('seller', 0);
+        $year = $request->query->get('year', 0);
+        $km = $request->query->get('km', 0);
+        $price = $request->query->get('price', 0);
 
-        $cars= $carsRepository->searchCars($brand, $model, $seller);
-        // $km, $year, $price);
+        $cars= $carsRepository->searchCars($brand, $model, $seller, $year, $km, $price);
+
         return new JsonResponse($cars);
     }
 

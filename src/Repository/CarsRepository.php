@@ -19,10 +19,16 @@ class CarsRepository extends ServiceEntityRepository
         parent::__construct($registry, Cars::class);
     }
 
-    public function searchCars($brand, $model, $seller)
-    // , $seller, $km, $year, $price) 
+    public function searchCars($brand, $model, $seller, $year, $km, $price)
     {
         $imageURL = "http://localhost:8000/img/";
+
+        $yearRangeLess = $year - 5;
+        $yearRangeMore = $year + 5;
+        $kmRangeLess = $km - 5000;
+        $kmRangeMore = $km + 5000;
+        $priceRangeLess = $price - 5000;
+        $priceRangeMore = $price + 5000;
 
         $sql_where = "";
 
@@ -38,7 +44,19 @@ class CarsRepository extends ServiceEntityRepository
             $sql_where .= "AND u.type = '$seller' ";
         }
 
-        if (!$brand && !$model && !$seller) {
+        if($year !== 0) {
+            $sql_where .= "AND c.carYear BETWEEN $yearRangeLess AND $yearRangeMore";
+        }
+
+        if($km !== 0) {
+            $sql_where .= "AND c.km BETWEEN $kmRangeLess AND $kmRangeMore";
+        }
+
+        if($price !== 0) {
+            $sql_where .= "AND c.carPrice BETWEEN $priceRangeLess AND $priceRangeMore";
+        }
+
+        if (!$brand && !$model && !$seller && !$year && !$km && !$price) {
             $sql_where .= "AND c.carId in (63, 1, 36, 19, 65)";
         }
 
