@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -15,11 +17,11 @@ class Users implements UserInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $userId;
+    private $id;
 
     /**
      * @var bool
@@ -79,9 +81,19 @@ class Users implements UserInterface
      */
     private $type;
 
-    public function getUserId(): ?int
+    /**
+     * @ORM\ManyToMany(targetEntity=Cars::class, inversedBy="users")
+     */
+    private $cars;
+
+    public function __construct()
     {
-        return $this->userId;
+        $this->cars = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getActive(): ?bool
@@ -233,4 +245,27 @@ class Users implements UserInterface
         return $this;
     }
 
+    /**
+     * @return Collection|Cars[]
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    public function addCar(Cars $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Cars $car): self
+    {
+        $this->cars->removeElement($car);
+
+        return $this;
+    }
 }

@@ -57,13 +57,13 @@ class CarsRepository extends ServiceEntityRepository
         }
 
         if (!$brand && !$model && !$seller && !$year && !$km && !$price) {
-            $sql_where .= "AND c.carId in (63, 1, 36, 19, 65)";
+            $sql_where .= "AND c.id in (63, 1, 36, 19, 65)";
         }
 
         $sql_where_amended = substr($sql_where, 3);
 
         $sql = "SELECT 
-                    c.carId as id,
+                    c.id as id,
                     c.carYear as year, 
                     c.km as km,
                     c.shortDescription as description,
@@ -73,7 +73,7 @@ class CarsRepository extends ServiceEntityRepository
                     b.brandName as brand,
                     u.type as seller
                 FROM App:Cars c 
-                JOIN App:Users u WITH c.user = u.userId
+                JOIN App:Users u WITH c.user = u.id
                 JOIN App:Models m WITH c.model = m.id
                 JOIN App:Brands b WITH m.brand = b.id
                 WHERE $sql_where_amended";
@@ -90,7 +90,7 @@ class CarsRepository extends ServiceEntityRepository
         return $this->getEntityManager()
                         ->createQuery(
                         "SELECT 
-                            c.carId as id,
+                            c.id as id,
                             c.carYear as year, 
                             c.km as km,
                             c.shortDescription as description,
@@ -109,10 +109,10 @@ class CarsRepository extends ServiceEntityRepository
                             u.email as sellerEmail,
                             u.type as seller
                         FROM App:Cars c 
-                        JOIN App:Users u WITH c.user = u.userId
+                        JOIN App:Users u WITH c.user = u.id
                         JOIN App:Models m WITH c.model = m.id
                         JOIN App:Brands b WITH m.brand = b.id
-                        WHERE c.carId = '$id'")
+                        WHERE c.id = '$id'")
                         
                         ->getResult();
     }

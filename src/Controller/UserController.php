@@ -25,7 +25,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
         
         $userObj = [
-            'id' => $user-> getUserId(),
+            'id' => $user-> getId(),
             'name' => $user->getName(),
             'email' => $user->getEmail(),
             'address' => $user->getAddress(),
@@ -60,7 +60,7 @@ class UserController extends AbstractController
         $em->flush();
 
         $response = [];
-        $response['id'] = $user-> getUserId();
+        $response['id'] = $user-> getId();
         $response['name'] = $user->getName();
         $response['email'] = $user->getEmail();
         $response['address'] = $user->getAddress();
@@ -102,7 +102,7 @@ class UserController extends AbstractController
         $em->flush();
 
         $response = [];
-        $response['id'] = $user-> getUserId();
+        $response['id'] = $user-> getId();
         $response['name'] = $user->getName();
         $response['email'] = $user->getEmail();
         $response['address'] = $user->getAddress();
