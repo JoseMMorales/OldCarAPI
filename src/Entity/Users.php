@@ -253,16 +253,17 @@ class Users implements UserInterface
         return $this->cars;
     }
 
-    public function addCar(Cars $car): self
+    public function addCars(Cars $car): self
     {
         if (!$this->cars->contains($car)) {
             $this->cars[] = $car;
+            $car->addUsers($this);
         }
 
         return $this;
     }
 
-    public function removeCar(Cars $car): self
+    public function removeCars(Cars $car): self
     {
         $this->cars->removeElement($car);
 

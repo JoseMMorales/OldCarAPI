@@ -2,13 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\Users;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Users;
 
 /**
  * @method Users|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,7 +22,30 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         parent::__construct($registry, Users::class);
     }
 
-    /**
+    public function favouriteCars(int $id)
+    {
+        $imageURL = "http://localhost:8000/img/";
+
+        return $this->getEntityManager()
+                    ->createQueryBuilder()
+                    ->select(
+                        'user.id as idUser', 
+                        'cars.id as idCar', 
+                        'cars.carYear',
+                        'cars.carPrice',
+                        "CONCAT('$imageURL' , cars.mainImage) as image",
+                        'model.modelName',
+                        'brand.brandName')
+                    ->from('App:Users', 'user')
+                    ->join('user.cars','cars')
+                    ->join('cars.model', 'model')
+                    ->join('model.brand', 'brand')
+                    ->where('user.id = :id')
+                    ->setParameter('id' , $id)
+                    ->getQuery()->getResult(); 
+    }
+
+      /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
@@ -36,28 +58,6 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         $this->_em->persist($user);
         $this->_em->flush();
     }
-
-    public function favouriteCars(int $id)
-    {
-        return $this->getEntityManager()
-                    ->createQueryBuilder()
-                    ->select(
-                        'user.id as idUser', 
-                        'cars.id as idCar', 
-                        'cars.carYear',
-                        'cars.carPrice',
-                        'cars.mainImage as image',
-                        'model.modelName',
-                        'brand.brandName')
-                    ->from('App:Users', 'user')
-                    ->join('user.cars','cars')
-                    ->join('cars.model', 'model')
-                    ->join('model.brand', 'brand')
-                    ->where('user.id = :id')
-                    ->setParameter('id' , $id)
-                    ->getQuery()->getResult(); 
-    }
-    
 
     // /**
     //  * @return Users[] Returns an array of Users objects
