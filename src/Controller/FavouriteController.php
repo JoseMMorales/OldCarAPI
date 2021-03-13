@@ -11,31 +11,40 @@ use App\Repository\UsersRepository;
 class FavouriteController extends AbstractController
 {
     /**
-     * @Route("/favourite/{id}", name="favourite")
+     * @Route("/favourite/{id}", name="favourite", methods={"GET"})
      */
-    public function favourite(int $id, UsersRepository $repo): Response
+    public function favourite(int $id, UsersRepository $repoUser): Response
     {
-        $user = $repo->find($id);
+        // $user = $repoUser->find($id);
        
-        $favouritesArray = [];
-        $favourites = $user->getCars();
+        // $favouritesArray = [];
+        // $favourites = $user->getCars();
         
-        foreach ($favourites as $favourite) {
-            $favouriteObj = [
-                "idCar" => $favourite->getId(),
-                "description" => $favourite->getShortDescription(),
-            ];
-            $favouritesArray[] = $favouriteObj;
-        }
+        // foreach ($favourites as $favourite) {
 
-        dump($favouritesArray);
+        //     $favouriteObj = [
+        //         "idCar" => $favourite->getId(),
+        //         "year" => $favourite->getCarYear(),
+        //         "km" => $favourite->getKm(),
+        //         "price" => $favourite->getCarPrice(),
+        //         "idModel" => $favourite->getModel(),
+        //         "image" => $favourite->getMainImage()
+        //     ];
+        //     $favouritesArray[] = $favouriteObj;
+        // }
 
-        $userObj = [
-            "idUser" => $user-> getId(),
-            "name" => $user->getName(),
-            "favouriteCars" => $favouritesArray
-        ];
+        // dump($favouritesArray);
 
-        return new JsonResponse($userObj);
+        // $userObj = [
+        //     "idUser" => $user-> getId(),
+        //     "name" => $user->getName(),
+        //     "favouriteCars" => $favouritesArray
+        // ];
+
+        // return new JsonResponse($favouritesArray);
+
+        $cars= $repoUser->favouriteCars($id);
+      
+        return new JsonResponse($cars);
     }
 }

@@ -79,8 +79,8 @@ class CarsRepository extends ServiceEntityRepository
                 WHERE $sql_where_amended";
 
         return $this->getEntityManager()
-                ->createQuery($sql)
-                ->getResult();
+                    ->createQuery($sql)
+                    ->getResult();
     }
 
     public function detailsCars($id)
@@ -88,7 +88,7 @@ class CarsRepository extends ServiceEntityRepository
         $imageURL = "http://localhost:8000/img/";
         
         return $this->getEntityManager()
-                        ->createQuery(
+                    ->createQuery(
                         "SELECT 
                             c.id as id,
                             c.carYear as year, 
@@ -113,8 +113,7 @@ class CarsRepository extends ServiceEntityRepository
                         JOIN App:Models m WITH c.model = m.id
                         JOIN App:Brands b WITH m.brand = b.id
                         WHERE c.id = '$id'")
-                        
-                        ->getResult();
+                    ->getResult();
     }
 
     // /**

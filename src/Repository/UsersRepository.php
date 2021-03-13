@@ -37,6 +37,28 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         $this->_em->flush();
     }
 
+    public function favouriteCars(int $id)
+    {
+        return $this->getEntityManager()
+                    ->createQueryBuilder()
+                    ->select(
+                        'user.id as idUser', 
+                        'cars.id as idCar', 
+                        'cars.carYear',
+                        'cars.carPrice',
+                        'cars.mainImage as image',
+                        'model.modelName',
+                        'brand.brandName')
+                    ->from('App:Users', 'user')
+                    ->join('user.cars','cars')
+                    ->join('cars.model', 'model')
+                    ->join('model.brand', 'brand')
+                    ->where('user.id = :id')
+                    ->setParameter('id' , $id)
+                    ->getQuery()->getResult(); 
+    }
+    
+
     // /**
     //  * @return Users[] Returns an array of Users objects
     //  */
