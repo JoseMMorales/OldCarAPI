@@ -38,5 +38,34 @@ class Models
      */
     private $brand;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getModelName(): ?string
+    {
+        return $this->modelName;
+    }
+
+    public function setModelName(string $modelName): self
+    {
+        $this->modelName = $modelName;
+
+        return $this;
+    }
+
+    public function getBrand(): ?Brands
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?Brands $brand): self
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
 
 }

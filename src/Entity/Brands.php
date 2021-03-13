@@ -28,5 +28,22 @@ class Brands
      */
     private $brandName;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getBrandName(): ?string
+    {
+        return $this->brandName;
+    }
+
+    public function setBrandName(string $brandName): self
+    {
+        $this->brandName = $brandName;
+
+        return $this;
+    }
+
 
 }

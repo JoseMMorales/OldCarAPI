@@ -118,5 +118,199 @@ class Cars
      */
     private $user;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Users::class, inversedBy="cars")
+     */
+    private $users;
 
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Users[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUsers(Users $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUsers(Users $user): self
+    {
+        $this->users->removeElement($user);
+
+        return $this;
+    }
+
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getCarYear(): ?int
+    {
+        return $this->carYear;
+    }
+
+    public function setCarYear(int $carYear): self
+    {
+        $this->carYear = $carYear;
+
+        return $this;
+    }
+
+    public function getKm(): ?int
+    {
+        return $this->km;
+    }
+
+    public function setKm(?int $km): self
+    {
+        $this->km = $km;
+
+        return $this;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(?string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(?string $longDescription): self
+    {
+        $this->longDescription = $longDescription;
+
+        return $this;
+    }
+
+    public function getCarPrice(): ?int
+    {
+        return $this->carPrice;
+    }
+
+    public function setCarPrice(int $carPrice): self
+    {
+        $this->carPrice = $carPrice;
+
+        return $this;
+    }
+
+    public function getMainImage(): ?string
+    {
+        return $this->mainImage;
+    }
+
+    public function setMainImage(?string $mainImage): self
+    {
+        $this->mainImage = $mainImage;
+
+        return $this;
+    }
+
+    public function getSecondImage(): ?string
+    {
+        return $this->secondImage;
+    }
+
+    public function setSecondImage(?string $secondImage): self
+    {
+        $this->secondImage = $secondImage;
+
+        return $this;
+    }
+
+    public function getThirdImage(): ?string
+    {
+        return $this->thirdImage;
+    }
+
+    public function setThirdImage(?string $thirdImage): self
+    {
+        $this->thirdImage = $thirdImage;
+
+        return $this;
+    }
+
+    public function getFourthImage(): ?string
+    {
+        return $this->fourthImage;
+    }
+
+    public function setFourthImage(?string $fourthImage): self
+    {
+        $this->fourthImage = $fourthImage;
+
+        return $this;
+    }
+
+    public function getFifthImage(): ?string
+    {
+        return $this->fifthImage;
+    }
+
+    public function setFifthImage(?string $fifthImage): self
+    {
+        $this->fifthImage = $fifthImage;
+
+        return $this;
+    }
+
+    public function getModel(): ?Models
+    {
+        return $this->model;
+    }
+
+    public function setModel(?Models $model): self
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Users $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 }
