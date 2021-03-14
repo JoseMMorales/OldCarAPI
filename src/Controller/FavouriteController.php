@@ -86,7 +86,7 @@ class FavouriteController extends AbstractController
     public function deleteFavourite(int $id, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        $user->getCars($id)->removeElement($id);
+        $user->getCars()->removeElement($id);
 
         dump($user);
        
