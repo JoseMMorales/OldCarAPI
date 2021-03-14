@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
@@ -89,6 +89,31 @@ class Users implements UserInterface
     public function __construct()
     {
         $this->cars = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Cars[]
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    public function addCars(Cars $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            // $car->addUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCars(Cars $car): self
+    {
+        $this->cars->removeElement($car);
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -241,31 +266,6 @@ class Users implements UserInterface
     public function setType(?string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Cars[]
-     */
-    public function getCars(): Collection
-    {
-        return $this->cars;
-    }
-
-    public function addCars(Cars $car): self
-    {
-        if (!$this->cars->contains($car)) {
-            $this->cars[] = $car;
-            $car->addUsers($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCars(Cars $car): self
-    {
-        $this->cars->removeElement($car);
 
         return $this;
     }

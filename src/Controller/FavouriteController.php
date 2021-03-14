@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CarsRepository;
 use App\Repository\UsersRepository;
@@ -55,16 +56,21 @@ class FavouriteController extends AbstractController
     /**
      * @Route("/addFavourite/{id}", name="addFavourite", methods={"POST"})
      */
-    public function addFavourite(int $id, CarsRepository $repoCars, UsersRepository $repoUsers, EntityManagerInterface $em): Response
+    public function addFavourite(
+        int $id, 
+        CarsRepository $repoCars, 
+        EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
+        $user->getId();
+
         $car = $repoCars->findOneBy(['id' => $id]);
 
         dump($car);
         dump($user);
 
-        $user = new Users;
-        $user->addCars($car);
+        $user = new Cars;
+        $user->addUsers($car);
 
         $em->persist($user);
         $em->flush();
@@ -80,7 +86,10 @@ class FavouriteController extends AbstractController
     public function deleteFavourite(int $id, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        $em->removeCars($id);
+        $user->getCars($id)->removeElement($id);
+
+        dump($user);
+       
         $em->flush();
 
         $response = [ 'favouriteCar' => 'Favourite Car deleted' ];
