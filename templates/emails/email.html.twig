@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FavouriteController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+   <h3>Email enviado desde OldCar Email Service.</h3>
+
+    <p><b>Nombre:</b> {{ name }} </p>
+    <p><b>Email:</b> {{ email }} </p>
+    <p><b>Mensaje:</b> {{ text }} </p>
+
+    <h2>Gracias por usar OldCar!!!</h2>
+</div>
+{% endblock %}

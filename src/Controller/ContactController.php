@@ -24,22 +24,28 @@ class ContactController extends AbstractController
             'text' => $contactText
         ];
 
-        // $toLocation = '';
-        // $fromLocation = '';
+        $toLocation = '';
+        $fromLocation = '';
 
-        // if ($location === 'contact') {
-        //     $toLocation = 'oldcarcodespace@gmail.com';
-        //     $fromLocation = $contactForm['email'];
-        // } else {
-        //     $toLocation = $contactForm['email'];
-        //     $fromLocation = 'oldcarcodespace@gmail.com';
-        // };
+        if ($location === 'contacts') {
+            $fromLocation = $contactForm['email'];
+            $toLocation = 'oldcarcodespace@gmail.com';
+        } else {
+            $fromLocation = 'oldcarcodespace@gmail.com';
+            $toLocation = $contactForm['email'];
+        };
         
-        $message = (new \Swift_Message('Tienes un email'))
-            ->setFrom('oldcarcodespace@gmail.com')
-            ->setTo('mistymossd48@vaticanakq.com')
+        $message = (new \Swift_Message('Email recibido desde OldCar'))
+            ->setFrom($fromLocation)
+            ->setTo($toLocation)
             ->setBody(
-                $contactForm['text']
+                $this->renderView(
+                    'emails/email.html.twig',[
+                    'name' => $contactForm['username'],
+                    'email' => $contactForm['email'],
+                    'text' => $contactForm['text']
+                ]),
+                'text/html'
         );
 
         $mailer->send($message);
