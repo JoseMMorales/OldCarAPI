@@ -47,7 +47,6 @@ class PublishController extends AbstractController
         $photos[1] = $request->files->get('file1');
 
         dump($request->files->get('file'));
-        dump($photos);
 
         $user = $repoUsers->findOneBy(['email' => $newEmail]);
 
@@ -101,7 +100,7 @@ class PublishController extends AbstractController
         
         $em->persist($car);
         $em->flush();
-        $carId = $car->getCarId();
+        $carId = $car->getId();
 
         $photoNames = [];
         $dir = $this->getParameter('photos_cars');

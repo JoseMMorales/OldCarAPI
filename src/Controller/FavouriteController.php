@@ -30,19 +30,35 @@ class FavouriteController extends AbstractController
      */
     public function addFavourite(
         int $id, 
-        CarsRepository $repoCars, 
+        CarsRepository $repoCars,
+        UsersRepository $repoUser, 
         EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         $car = $repoCars->findOneBy(['id' => $id]);
 
+        dump($car);        
+
         $user->addCars($car);
         $em->persist($user);
         $em->flush();
 
-        $response = [ 'favouriteCar' => 'Favourite Car Added on' ];
+        $imageURL = "http://localhost:8000/img/";
+        $imageName = $car->getMainImage();
 
-        return new JsonResponse($response); 
+        $imageConcatURL = $imageURL.$imageName;
+
+        $carObj = [
+            'idUser' => $user->getId(),
+            'idCar' => $car->getId(),
+            'carYear' => $car->getCarYear(),
+            'carPrice' => $car->getCarPrice(),
+            'image' => "$imageConcatURL",
+            'model' => $car->getModel()->getModelName(),
+            'brand' => $car->getModel()->getBrand()->getBrandName(),
+        ];
+
+        return new JsonResponse($carObj); 
     }
 
     /**
@@ -59,8 +75,16 @@ class FavouriteController extends AbstractController
         $user->removeCars($car);
         $em->flush();
 
-        $response = [ 'favouriteCar' => 'Favourite Car deleted' ];
+        $carObj = [
+            // 'idUser' => $user->getId(),
+            'idCar' => $car->getId(),
+            // 'carYear' => $car->getCarYear(),
+            // 'carPrice' => $car->getCarPrice(),
+            // 'image' => $car->getMainImage(),
+            // 'model' => $car->getModel()->getModelName(),
+            // 'brand' => $car->getModel()->getBrand()->getBrandName(),
+        ];
 
-        return new JsonResponse($response); 
+        return new JsonResponse($carObj); 
     }
 }
