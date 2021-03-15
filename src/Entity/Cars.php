@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Cars
@@ -140,7 +141,6 @@ class Cars
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            // $user->addCars($this);
         }
 
         return $this;
