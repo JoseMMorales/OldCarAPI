@@ -3,17 +3,25 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\UsersRepository;
+use App\Entity\Users;
 
 class ContactController extends AbstractController
 {
     /**
-     * @Route("/contact/{location}", name="contact")
+     * @Route("/contact/{location}/{id}", name="contact")
      */
-    public function contact(string $location, Request $request, \Swift_Mailer $mailer): Response
+    public function contact(
+        int $id, 
+        Request $request, 
+        string $location, 
+        UsersRepository $repoUsers,
+        \Swift_Mailer $mailer): Response
     {
+
         $contactName = $request->get('username');
         $contactEmail = $request->get('email');
         $contactText = $request->get('text');
@@ -24,15 +32,25 @@ class ContactController extends AbstractController
             'text' => $contactText
         ];
 
+        $toEmail = '';
+
+        if($id === 0){
+            $toEmail = 'oldcarcodespace@gmail.com';
+        } else {
+            $user = $repoUsers->findOneBy(['id' => $id]);
+            $userEmail = $user->getEmail();
+            $toEmail = $userEmail;
+        }
+
         $toLocation = '';
         $fromLocation = '';
 
         if ($location === 'contacts') {
             $fromLocation = $contactForm['email'];
-            $toLocation = 'oldcarcodespace@gmail.com';
+            $toLocation = $toEmail;
         } else {
-            $fromLocation = 'oldcarcodespace@gmail.com';
-            $toLocation = $contactForm['email'];
+            $fromLocation = $contactForm['email'];
+            $toLocation = $toEmail;
         };
         
         $message = (new \Swift_Message('Email recibido desde OldCar'))
