@@ -20,34 +20,6 @@ class FavouriteController extends AbstractController
      */
     public function favourite(int $id, UsersRepository $repoUser): Response
     {
-        // $user = $repoUser->find($id);
-       
-        // $favouritesArray = [];
-        // $favourites = $user->getCars();
-        
-        // foreach ($favourites as $favourite) {
-
-        //     $favouriteObj = [
-        //         "idCar" => $favourite->getId(),
-        //         "year" => $favourite->getCarYear(),
-        //         "km" => $favourite->getKm(),
-        //         "price" => $favourite->getCarPrice(),
-        //         "idModel" => $favourite->getModel(),
-        //         "image" => $favourite->getMainImage()
-        //     ];
-        //     $favouritesArray[] = $favouriteObj;
-        // }
-
-        // dump($favouritesArray);
-
-        // $userObj = [
-        //     "idUser" => $user-> getId(),
-        //     "name" => $user->getName(),
-        //     "favouriteCars" => $favouritesArray
-        // ];
-
-        // return new JsonResponse($favouritesArray);
-
         $cars= $repoUser->favouriteCars($id);
       
         return new JsonResponse($cars);
@@ -62,20 +34,13 @@ class FavouriteController extends AbstractController
         EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        $user->getId();
-
         $car = $repoCars->findOneBy(['id' => $id]);
 
-        dump($car);
-        dump($user);
-
-        $user = new Cars;
-        $user->addUsers($car);
-
+        $user->addCars($car);
         $em->persist($user);
         $em->flush();
 
-        $response = [ 'favouriteCar' => 'Favourite Car deleted' ];
+        $response = [ 'favouriteCar' => 'Favourite Car Added on' ];
 
         return new JsonResponse($response); 
     }
@@ -83,13 +48,15 @@ class FavouriteController extends AbstractController
     /**
      * @Route("/deleteFavourite/{id}", name="deleteFavourite", methods={"DELETE"})
      */
-    public function deleteFavourite(int $id, EntityManagerInterface $em): Response
+    public function deleteFavourite(
+        int $id, 
+        CarsRepository $repoCars, 
+        EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        $user->getCars()->removeElement($id);
+        $car = $repoCars->findOneBy(['id' => $id]);
 
-        dump($user);
-       
+        $user->removeCars($car);
         $em->flush();
 
         $response = [ 'favouriteCar' => 'Favourite Car deleted' ];

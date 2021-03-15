@@ -23,6 +23,8 @@ class CarsRepository extends ServiceEntityRepository
     {
         $imageURL = "http://localhost:8000/img/";
 
+        // $imageURL = $this->getParameter('photos_URL');
+
         $yearRangeLess = $year - 5;
         $yearRangeMore = $year + 5;
         $kmRangeLess = $km - 5000;
@@ -86,6 +88,8 @@ class CarsRepository extends ServiceEntityRepository
     public function detailsCars($id)
     {
         $imageURL = "http://localhost:8000/img/";
+
+        // $imageURL = $this->getParameter('photos_URL');
         
         return $this->getEntityManager()
                     ->createQuery(

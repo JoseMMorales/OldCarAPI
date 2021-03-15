@@ -40,7 +40,10 @@ class UserController extends AbstractController
     /**
      * @Route("/add", name="add_user", methods={"POST"})
      */
-    public function addUser( Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
+    public function addUser( 
+        Request $request, 
+        EntityManagerInterface $em, 
+        UserPasswordEncoderInterface $encoder): Response
     {
         $username = $request->get('username');
         $email = $request->get('email');
@@ -74,7 +77,11 @@ class UserController extends AbstractController
     /**
      * @Route("/update", name="update_user", methods={"POST"})
      */
-    public function updateUser( Request $request, UsersRepository $repo, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
+    public function updateUser( 
+        Request $request, 
+        UsersRepository $repo, 
+        EntityManagerInterface $em, 
+        UserPasswordEncoderInterface $encoder): Response
     {
         $username = $request->get('username');
         $type = $request->get('type');
