@@ -21,7 +21,6 @@ class FavouriteController extends AbstractController
     public function favourite(int $id, UsersRepository $repoUser): Response
     {
         $cars= $repoUser->favouriteCars($id);
-      
         return new JsonResponse($cars);
     }
 
@@ -31,40 +30,52 @@ class FavouriteController extends AbstractController
     public function addFavourite(
         int $id, 
         CarsRepository $repoCars,
-        UsersRepository $repoUser, 
         EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        $car = $repoCars->findOneBy(['id' => $id]);
+        $car = $repoCars->find($id);
+        $favourites = $user->getCars();
 
-        $carsExist = $user->getCars();
-
-        foreach ($carsExist as $key => $carsExist) {
-            if ($carsExist->getId() === $id) {
+        if ($favourites->isEmpty()) {
+            $carObj = $this->addingCars($user, $car, $em); 
+        } else {
+            $carExist = false;
+            foreach ($favourites as $favourite) {
+                if ($favourite->getId() === $id) {
+                    $carExist = true;
+                    break;
+                } 
+            }      
+            if ($carExist) {
                 $carObj = ['idCar' => 0];
-                break;
             } else {
-                $user->addCars($car);
-                $em->persist($user);
-                $em->flush();
-              
-                $imageURL = "http://localhost:8000/img/";
-                $imageName = $car->getMainImage();
-
-                $imageConcatURL = $imageURL.$imageName;
-
-                $carObj = [
-                    'idUser' => $user->getId(),
-                    'idCar' => $car->getId(),
-                    'carYear' => $car->getCarYear(),
-                    'carPrice' => $car->getCarPrice(),
-                    'image' => "$imageConcatURL",
-                    'model' => $car->getModel()->getModelName(),
-                    'brand' => $car->getModel()->getBrand()->getBrandName(),
-                ];
-            }
-        }           
+                $carObj =  $this->addingCars($user, $car, $em); 
+            }     
+        }
         return new JsonResponse($carObj); 
+    }
+
+    private function addingCars($user, $car, $em) 
+    {
+        $user->addCars($car);
+        $em->persist($user);
+        $em->flush();
+        
+        $imageURL = "http://localhost:8000/img/";
+        $imageName = $car->getMainImage();
+
+        $imageConcatURL = $imageURL.$imageName;
+
+        $carObj = [
+            'idUser' => $user->getId(),
+            'idCar' => $car->getId(),
+            'carYear' => $car->getCarYear(),
+            'carPrice' => $car->getCarPrice(),
+            'image' => "$imageConcatURL",
+            'model' => $car->getModel()->getModelName(),
+            'brand' => $car->getModel()->getBrand()->getBrandName(),
+        ];
+        return $carObj;
     }
 
     /**
