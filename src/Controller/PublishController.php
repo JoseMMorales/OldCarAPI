@@ -45,8 +45,9 @@ class PublishController extends AbstractController
         $longDescription = $request->get('longDescription');
         $photos[0] = $request->files->get('file0');
         $photos[1] = $request->files->get('file1');
-
-        dump($request->files->get('file'));
+        $photos[2] = $request->files->get('file2');
+        $photos[3] = $request->files->get('file3');
+        $photos[4] = $request->files->get('file4');
 
         $user = $repoUsers->findOneBy(['email' => $newEmail]);
 
@@ -119,9 +120,9 @@ class PublishController extends AbstractController
 
         $car->setMainImage($photoNames[0]);
         $car->setSecondImage($photoNames[1]);
-        // $car->setThirdImage($photoName[2]);
-        // $car->setFourthImage($photoName[3]);
-        // $car->setFifthImage($photoName[4]);
+        $car->setThirdImage($photoNames[2]);
+        $car->setFourthImage($photoNames[3]);
+        $car->setFifthImage($photoNames[4]);
 
         $em->persist($car);
         $em->flush();
