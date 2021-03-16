@@ -37,27 +37,33 @@ class FavouriteController extends AbstractController
         $user = $this->getUser();
         $car = $repoCars->findOneBy(['id' => $id]);
 
-        dump($car);        
+        $carsExist = $user->getCars();
 
-        $user->addCars($car);
-        $em->persist($user);
-        $em->flush();
+        foreach ($carsExist as $key => $carsExist) {
+            if ($carsExist->getId() === $id) {
+                $carObj = ['idCar' => 0];
+                break;
+            } else {
+                $user->addCars($car);
+                $em->persist($user);
+                $em->flush();
+              
+                $imageURL = "http://localhost:8000/img/";
+                $imageName = $car->getMainImage();
 
-        $imageURL = "http://localhost:8000/img/";
-        $imageName = $car->getMainImage();
+                $imageConcatURL = $imageURL.$imageName;
 
-        $imageConcatURL = $imageURL.$imageName;
-
-        $carObj = [
-            'idUser' => $user->getId(),
-            'idCar' => $car->getId(),
-            'carYear' => $car->getCarYear(),
-            'carPrice' => $car->getCarPrice(),
-            'image' => "$imageConcatURL",
-            'model' => $car->getModel()->getModelName(),
-            'brand' => $car->getModel()->getBrand()->getBrandName(),
-        ];
-
+                $carObj = [
+                    'idUser' => $user->getId(),
+                    'idCar' => $car->getId(),
+                    'carYear' => $car->getCarYear(),
+                    'carPrice' => $car->getCarPrice(),
+                    'image' => "$imageConcatURL",
+                    'model' => $car->getModel()->getModelName(),
+                    'brand' => $car->getModel()->getBrand()->getBrandName(),
+                ];
+            }
+        }           
         return new JsonResponse($carObj); 
     }
 
@@ -75,16 +81,8 @@ class FavouriteController extends AbstractController
         $user->removeCars($car);
         $em->flush();
 
-        $carObj = [
-            // 'idUser' => $user->getId(),
-            'idCar' => $car->getId(),
-            // 'carYear' => $car->getCarYear(),
-            // 'carPrice' => $car->getCarPrice(),
-            // 'image' => $car->getMainImage(),
-            // 'model' => $car->getModel()->getModelName(),
-            // 'brand' => $car->getModel()->getBrand()->getBrandName(),
-        ];
+        $response = ['idCar' => $car->getId()];
 
-        return new JsonResponse($carObj); 
+        return new JsonResponse($response); 
     }
 }
