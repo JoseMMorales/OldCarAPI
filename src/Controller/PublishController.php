@@ -106,14 +106,19 @@ class PublishController extends AbstractController
         $dir = $this->getParameter('photos_cars');
 
         foreach ($photos as $key => $photo) {
-            $index = $key + 1; 
-            $photoName = "/$carId"."-IMG$index.jpg";
-            $photo->move($dir."$brand"."/$model", $photoName);
+            if (!$photo) {
+                $photoName = "Default/defaultImage.jpg";
+            } else {
+                $index = $key + 1; 
+                $extension = $photo->getClientOriginalExtension();
+                $photoName = "$brand"."/$model"."/$carId"."-IMG$index.$extension";
+                $photo->move($dir."$brand"."/$model", $photoName);
+            }
             $photoNames[] = $photoName;
         };
 
-        $car->setMainImage($photoName[0]);
-        $car->setSecondImage($photoName[1]);
+        $car->setMainImage($photoNames[0]);
+        $car->setSecondImage($photoNames[1]);
         // $car->setThirdImage($photoName[2]);
         // $car->setFourthImage($photoName[3]);
         // $car->setFifthImage($photoName[4]);
@@ -121,7 +126,7 @@ class PublishController extends AbstractController
         $em->persist($car);
         $em->flush();
 
-        $response = ["Car and User uploaded onto DDBB"];
+        $response = ['id'=> $car->getId()];
 
         return $this->json($response);
     }
