@@ -8,7 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CarsRepository;
+use App\Entity\Cars;
 
+/**
+ * @Route("/cars")
+ */
 class CarsController extends AbstractController
 {
     /**
@@ -35,5 +39,32 @@ class CarsController extends AbstractController
     {
         $car= $carsRepository->detailsCars($id);
         return new JsonResponse($car);
+    }
+
+    /**
+     * @Route("/published", name="data_user_published", methods={"GET"})
+     */
+    public function published(CarsRepository $carsRepository): Response
+    {
+        $user = $this->getUser();
+        $id = $user->getId();
+        $cars = $carsRepository->findBy(['user' => $id]);
+
+        $carsArray = [];
+        $imageURL = "http://localhost:8000/img/";
+
+        foreach ($cars as $car) {
+            $carObj = [
+                'idCar' => $car->getId(),
+                'carYear' => $car->getCarYear(),
+                'carPrice' => $car->getCarPrice(),
+                'image' => $car->getMainImage(),
+                'model' => $car->getModel()->getModelName(),
+                'brand' => $car->getModel()->getBrand()->getBrandName(),
+            ];
+            $carObj['image'] = $imageURL.$carObj['image'];
+            $carsArray[] = $carObj;
+        }
+        return new JsonResponse($carsArray);
     }
 }
