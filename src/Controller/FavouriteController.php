@@ -61,7 +61,7 @@ class FavouriteController extends AbstractController
         $em->persist($user);
         $em->flush();
         
-        $imageURL = "http://localhost:8000/img/";
+        $imageURL = $this->getParameter('photos_cars_URL');
         $imageName = $car->getMainImage();
 
         $imageConcatURL = $imageURL.$imageName;

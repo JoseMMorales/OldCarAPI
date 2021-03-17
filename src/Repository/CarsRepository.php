@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Cars;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Cars;
 
 /**
  * @method Cars|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,16 +15,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CarsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $params;
+
+    public function __construct(
+        ManagerRegistry $registry, 
+        ParameterBagInterface $params)
     {
         parent::__construct($registry, Cars::class);
+        $this->params= $params;
     }
 
     public function searchCars($brand, $model, $seller, $year, $km, $price)
     {
-        $imageURL = "http://localhost:8000/img/";
-
-        // $imageURL = $this->getParameter('photos_URL');
+        $imageURL = $this->params->get('photos_cars_URL');
 
         $yearRangeLess = $year - 5;
         $yearRangeMore = $year + 5;
@@ -87,10 +91,8 @@ class CarsRepository extends ServiceEntityRepository
 
     public function detailsCars($id)
     {
-        $imageURL = "http://localhost:8000/img/";
+        $imageURL = $this->params->get('photos_cars_URL');
 
-        // $imageURL = $this->getParameter('photos_URL');
-        
         return $this->getEntityManager()
                     ->createQuery(
                         "SELECT 

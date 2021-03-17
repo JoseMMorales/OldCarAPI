@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -17,14 +18,19 @@ use App\Entity\Users;
  */
 class UsersRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    private $params;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        ParameterBagInterface $params)
     {
         parent::__construct($registry, Users::class);
+        $this->params= $params;
     }
 
     public function favouriteCars(int $id)
     {
-        $imageURL = "http://localhost:8000/img/";
+        $imageURL = $this->params->get('photos_cars_URL');
 
         return $this->getEntityManager()
                     ->createQueryBuilder()

@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     photos_cars:  '%kernel.project_dir%/public/img/'
+    photos_cars_URL: 'http://localhost:8000/img/'
 
 services:
     # default configuration for services in *this* file
