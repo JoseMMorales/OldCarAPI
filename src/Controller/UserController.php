@@ -42,6 +42,7 @@ class UserController extends AbstractController
      */
     public function addUser( 
         Request $request, 
+        UsersRepository $repoUsers,
         EntityManagerInterface $em, 
         UserPasswordEncoderInterface $encoder): Response
     {
@@ -49,28 +50,42 @@ class UserController extends AbstractController
         $email = $request->get('email');
         $password = $request->get('password');
 
-        $user = new Users();
-        $user->setActive(1);
-        $user->setName($username);
-        $user->setEmail($email);
-        $user->setRoles([]);
+        $user = $repoUsers->findOneBy(['email' => $email]);
 
-        $plainPassword = $password;
-        $encoded = $encoder->encodePassword($user, $plainPassword);
-        $user->setPassword($encoded);
+        if ($user) {
+            $messageNo = 'Usuario creado en Database, inténtalo otra vez!!';
+            $response = [
+                'message' => $messageNo , 
+                'code' => 400
+            ];
+        } else {
+            $user = new Users();
+            $user->setActive(1);
+            $user->setName($username);
+            $user->setEmail($email);
+            $user->setRoles([]);
+    
+            $plainPassword = $password;
+            $encoded = $encoder->encodePassword($user, $plainPassword);
+            $user->setPassword($encoded);
+    
+            $em->persist($user);
+            $em->flush();
 
-        $em->persist($user);
-        $em->flush();
-
-        $response = [];
-        $response['id'] = $user-> getId();
-        $response['name'] = $user->getName();
-        $response['email'] = $user->getEmail();
-        $response['address'] = $user->getAddress();
-        $response['city'] = $user->getCity();
-        $response['phone'] = $user->getPhone();
-        $response['type'] = $user->getType();
-        
+            $messageOk = 'Usuario creado!!';
+    
+            $response = [
+                'message' => $messageOk , 
+                'code' => 200,
+                'id' => $user-> getId(),
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'address' => $user->getAddress(),
+                'city' => $user->getCity(),
+                'phone' => $user->getPhone(),
+                'type' => $user->getType()
+            ];
+        }
         return $this->json($response);
     }
 

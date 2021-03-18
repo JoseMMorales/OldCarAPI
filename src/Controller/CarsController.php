@@ -8,7 +8,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\BrandsRepository;
+use App\Repository\ModelsRepository;
+use App\Repository\UsersRepository;
 use App\Repository\CarsRepository;
+use App\Entity\Models;
+use App\Entity\Brands;
+use App\Entity\Users;
 use App\Entity\Cars;
 
 /**
@@ -89,6 +95,27 @@ class CarsController extends AbstractController
                 $em->flush();
            }
         };
+
+        $response = [ 'id' => $idCar ];
+
+        return new JsonResponse($response); 
+    }
+
+    /**
+     * @Route("/updated/{idCar}", name="data_user_updated", methods={"POST"})
+     */
+    public function updated(
+        int $idCar, 
+        Request $request, 
+        UsersRepository $repoUsers,
+        CarsRepository $repoCar,
+        ModelsRepository $repoModel, 
+        BrandsRepository $repoBrands,
+        EntityManagerInterface $em): Response
+    {
+        $cars = $carsRepository->find(['user' => $idCar]);
+        
+        dump($cars);
 
         $response = [ 'id' => $idCar ];
 
