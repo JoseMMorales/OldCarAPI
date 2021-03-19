@@ -16,12 +16,12 @@ use App\Entity\Brands;
 use App\Entity\Users;
 use App\Entity\Cars;
 
-class PublishController extends AbstractController
+class PublishNotUserController extends AbstractController
 {
     /**
-     * @Route("/publish", name="publish", methods={"POST"})
+     * @Route("/publish/notUser", name="publish_notUser", methods={"POST"})
      */
-    public function publish(
+    public function publishNotUser(
         Request $request, 
         UsersRepository $repoUsers,
         CarsRepository $repoCar,

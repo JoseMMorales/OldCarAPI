@@ -63,13 +63,24 @@ class CarsController extends AbstractController
         foreach ($cars as $car) {
             $carObj = [
                 'idCar' => $car->getId(),
-                'carYear' => $car->getCarYear(),
-                'carPrice' => $car->getCarPrice(),
-                'image' => $car->getMainImage(),
+                'km' => $car->getKm(),
+                'price' => $car->getCarPrice(),
+                'year' => $car->getCarYear(),
                 'model' => $car->getModel()->getModelName(),
                 'brand' => $car->getModel()->getBrand()->getBrandName(),
+                'shortDescription' => $car->getShortDescription(),
+                'longDescription' => $car->getLongDescription(),
+                'imageMain' => $car->getMainImage(),
+                'imageSecond' => $car->getSecondImage(),
+                'imageThird' => $car->getThirdImage(),
+                'imageFourth' => $car->getFourthImage(),
+                'imageFifth' => $car->getFifthImage(),
             ];
-            $carObj['image'] = $imageURL.$carObj['image'];
+            $carObj['imageMain'] = $imageURL.$carObj['imageMain'];
+            $carObj['imageSecond'] = $imageURL.$carObj['imageSecond'];
+            $carObj['imageThird'] = $imageURL.$carObj['imageThird'];
+            $carObj['imageFourth'] = $imageURL.$carObj['imageFourth'];
+            $carObj['imageFifth'] = $imageURL.$carObj['imageFifth'];
             $carsArray[] = $carObj;
         }
         return new JsonResponse($carsArray);
@@ -113,7 +124,30 @@ class CarsController extends AbstractController
         BrandsRepository $repoBrands,
         EntityManagerInterface $em): Response
     {
+       
+        $brand = $request->get('brand');
+        $model = $request->get('model');
+        $km = $request->get('km');
+        $price = $request->get('price');
+        $year = $request->get('year');
+        $shortDescription = $request->get('shortDescription');
+        $longDescription = $request->get('longDescription');
+        $photos[0] = $request->files->get('file0');
+        $photos[1] = $request->files->get('file1');
+        $photos[2] = $request->files->get('file2');
+        $photos[3] = $request->files->get('file3');
+        $photos[4] = $request->files->get('file4');
+
         $cars = $carsRepository->find(['user' => $idCar]);
+
+        $car = new Cars();
+        $car->setActive(0);
+        $car->setCarYear($year);
+        $car->setKm($km);
+        $car->setShortDescription($shortDescription);
+        $car->setLongDescription($longDescription);
+        $car->setCarPrice($price);
+       
         
         dump($cars);
 
