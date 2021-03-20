@@ -21,7 +21,21 @@ class FavouriteController extends AbstractController
     public function favourite(int $id, UsersRepository $repoUser): Response
     {
         $cars= $repoUser->favouriteCars($id);
-        return new JsonResponse($cars);
+
+        $response = [];
+
+        foreach ($cars as $car) {
+            $carObj = [
+                'idUser' => $car['idUser'],
+                'idCar' => $car['idCar'],
+                'carPrice' => $car['carPrice'],
+                'image' => $car['image'],
+                'model' => $car['modelName'],
+                'brand' => $car['brandName']
+            ];
+            $response[] = $carObj;
+        };
+        return new JsonResponse($response);
     }
 
     /**

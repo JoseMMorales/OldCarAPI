@@ -110,19 +110,42 @@ class PublishedCarController extends AbstractController
 
         dump($year);
 
-        $cars = $repoCar->find(['id' => $idCar]);
-
-        $car = new Cars();
+        $car = $repoCar->find(['id' => $idCar]);
         $car->setCarYear($year);
         $car->setKm($km);
         $car->setShortDescription($shortDescription);
         $car->setLongDescription($longDescription);
         $car->setCarPrice($price);
 
-        $response = [ 'id' => $idCar ];
+        $em->persist($car);
+        $em->flush();
 
-        return new JsonResponse($response); 
+        $carsArray = [];
+        $imageURL = $this->getParameter('photos_cars_URL');
+
+        $carObj = [
+            'code' => 200,
+            'idCar' => $car->getId(),
+            'km' => $car->getKm(),
+            'price' => $car->getCarPrice(),
+            'year' => $car->getCarYear(),
+            'model' => $car->getModel()->getModelName(),
+            'brand' => $car->getModel()->getBrand()->getBrandName(),
+            'shortDescription' => $car->getShortDescription(),
+            'longDescription' => $car->getLongDescription(),
+            'imageMain' => $car->getMainImage(),
+            'imageSecond' => $car->getSecondImage(),
+            'imageThird' => $car->getThirdImage(),
+            'imageFourth' => $car->getFourthImage(),
+            'imageFifth' => $car->getFifthImage(),
+        ];
+
+        $carObj['imageMain'] = $imageURL.$carObj['imageMain'];
+        $carObj['imageSecond'] = $imageURL.$carObj['imageSecond'];
+        $carObj['imageThird'] = $imageURL.$carObj['imageThird'];
+        $carObj['imageFourth'] = $imageURL.$carObj['imageFourth'];
+        $carObj['imageFifth'] = $imageURL.$carObj['imageFifth'];
+
+        return new JsonResponse($carObj); 
     }
-
-
 }
