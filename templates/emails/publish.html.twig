@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PublishNotUserController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+   <h3>Email enviado desde OldCar Email Service.</h3>
+
+    <p>Tu coche ha sido publicado en OlCar!!</p>
+
+    <h1>Datos de contacto</h1>
+    <p><b>Nombre:</b> {{ name }} </p>
+    <p><b>Email:</b> {{ email }} </p>
+
+    <h1>Información de Coche</h1>
+      <p><b>Coche ID:</b> {{ carId }} </p>
+      <p><b>Año:</b> {{ year }} </p>
+      <p><b>km:</b> {{ km }} </p>
+      <p><b>Precio:</b> {{ precio }} </p>
+      <p><b>Comentario:</b> {{ comentario }} </p>
+      <p><b>Descripción:</b> {{ descripción }} </p>
+      
+    <h6>Gracias por usar OldCar!!!</h6>
+</div>
+{% endblock %}

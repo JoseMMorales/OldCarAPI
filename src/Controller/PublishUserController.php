@@ -89,8 +89,10 @@ class PublishUserController extends AbstractController
             } else {
                 $index = $key + 1; 
                 $extension = $photo->getClientOriginalExtension();
-                $photoName = "$brand"."/$model"."/$carId"."-IMG$index.$extension";
-                $photo->move($dir."$brand"."/$model", $photoName);
+                $brandNotSpace = str_replace(' ', '', $brand);
+                $modelNotSpace = str_replace(' ', '', $model);
+                $photoName = "$brandNotSpace"."/$modelNotSpace"."/$carId"."-IMG$index.$extension";
+                $photo->move($dir."$brandNotSpace"."/$modelNotSpace", $photoName);
             }
             $photoNames[] = $photoName;
         };

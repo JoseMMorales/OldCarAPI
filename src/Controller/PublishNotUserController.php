@@ -27,7 +27,8 @@ class PublishNotUserController extends AbstractController
         CarsRepository $repoCar,
         ModelsRepository $repoModel, 
         BrandsRepository $repoBrands,
-        EntityManagerInterface $em): Response
+        EntityManagerInterface $em,
+        \Swift_Mailer $mailer): Response
     {
         $username = $request->get('username');
         $newEmail = $request->get('email');
@@ -112,8 +113,10 @@ class PublishNotUserController extends AbstractController
             } else {
                 $index = $key + 1; 
                 $extension = $photo->getClientOriginalExtension();
-                $photoName = "$brand"."/$model"."/$carId"."-IMG$index.$extension";
-                $photo->move($dir."$brand"."/$model", $photoName);
+                $brandNotSpace = str_replace(' ', '', $brand);
+                $modelNotSpace = str_replace(' ', '', $model);
+                $photoName = "$brandNotSpace"."/$modelNotSpace"."/$carId"."-IMG$index.$extension";
+                $photo->move($dir."$brandNotSpace"."/$modelNotSpace", $photoName);
             }
             $photoNames[] = $photoName;
         };
@@ -127,7 +130,27 @@ class PublishNotUserController extends AbstractController
         $em->persist($car);
         $em->flush();
 
-        $response = ['id'=> $car->getId()];
+        $message = (new \Swift_Message('Gracias por publicar tu cohe en OldCar'))
+        ->setFrom('oldcarcodespace@gmail.com')
+        ->setTo($newEmail)
+        ->setBody(
+            $this->renderView(
+                'emails/publish.html.twig',[
+                'name' => $username,
+                'email' => $newEmail,
+                'carId' => $car->getId(),
+                'year' => $year,
+                'km' => $km,
+                'comentario' => $shortDescription,
+                'descripción' => $longDescription,
+                'precio' => $price
+            ]),
+            'text/html'
+        );
+
+        $mailer->send($message);
+
+        $response = ['code' => 200];
 
         return $this->json($response);
     }
