@@ -108,10 +108,11 @@ class PublishNotUserController extends AbstractController
         $dir = $this->getParameter('photos_cars');
 
         foreach ($photos as $key => $photo) {
+            $index = $key + 1; 
+
             if (!$photo) {
-                $photoName = "Default/defaultImage.jpg";
+                $photoName = "Default/defaultImage$index.jpg";
             } else {
-                $index = $key + 1; 
                 $extension = $photo->getClientOriginalExtension();
                 $brandNotSpace = str_replace(' ', '', $brand);
                 $modelNotSpace = str_replace(' ', '', $model);

@@ -148,4 +148,58 @@ class PublishedCarController extends AbstractController
 
         return new JsonResponse($carObj); 
     }
+
+    /**
+     * @Route("/deleteImage", name="data_user_delete_image", methods={"DELETE"})
+     */
+    public function deleteImage(
+        Request $request,
+        EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $name = $request->query->get('picture');
+
+        dump($name);
+        
+        $qb = $em->getRepository('App:Cars')->createQueryBuilder('c');
+        $qb
+            ->select('c')
+            ->where($qb->expr()->orX(
+                $qb->expr()->eq('c.mainImage', ':name'),
+                $qb->expr()->eq('c.secondImage', ':name'),
+                $qb->expr()->eq('c.thirdImage', ':name'),
+                $qb->expr()->eq('c.fourthImage', ':name'),
+                $qb->expr()->eq('c.fifthImage', ':name')
+            ))
+            ->setParameter('name' , $name);
+        $car = $qb->getQuery()->getSingleResult();
+
+        $carModel = $car->getModel()->getmodelName();
+        $carBrand = $car->getModel()->getBrand()->getBrandName();
+
+        $dir = $this->getParameter('photos_cars');
+
+        unlink("$dir/$name");
+
+        if ($car->getMainImage() === $name) {
+            $car->setMainImage(null);
+        }
+        if ($car->getSecondImage() === $name) {
+            $car->setSecondImage(null);
+        }
+        if ($car->getThirdImage() === $name) {
+            $car->setThirdImage(null);
+        }
+        if ($car->getFourthImage() === $name) {
+            $car->setFourthImage(null);
+        }
+        if ($car->getFifthImage() === $name) {
+            $car->setFifthImage(null);
+        }
+
+        $em->persist($car);
+        $em->flush();
+
+        return new JsonResponse($car);
+    }
 }
