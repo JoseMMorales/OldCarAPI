@@ -158,12 +158,10 @@ class PublishedCarController extends AbstractController
     {
         $user = $this->getUser();
         $name = $request->query->get('picture');
-
-        dump($name);
+        $idCar = $request->query->get('idCar');
         
         $qb = $em->getRepository('App:Cars')->createQueryBuilder('c');
-        $qb
-            ->select('c')
+        $qb ->select('c')
             ->where($qb->expr()->orX(
                 $qb->expr()->eq('c.mainImage', ':name'),
                 $qb->expr()->eq('c.secondImage', ':name'),
@@ -171,35 +169,51 @@ class PublishedCarController extends AbstractController
                 $qb->expr()->eq('c.fourthImage', ':name'),
                 $qb->expr()->eq('c.fifthImage', ':name')
             ))
-            ->setParameter('name' , $name);
+            ->andWhere('c.id = :id')
+            ->setParameters(array(
+                'name' => $name,
+                'id' => $idCar
+            ));
+          
         $car = $qb->getQuery()->getSingleResult();
 
-        $carModel = $car->getModel()->getmodelName();
-        $carBrand = $car->getModel()->getBrand()->getBrandName();
+        $result = [];
 
-        $dir = $this->getParameter('photos_cars');
+        if (str_contains($name, 'Default')) {
+            $sameName = $name;
+            $result['code'] = 200;
+        } else {
+            $carModel = $car->getModel()->getmodelName();
+            $carBrand = $car->getModel()->getBrand()->getBrandName();
 
-        unlink("$dir/$name");
+            $dir = $this->getParameter('photos_cars');
 
-        if ($car->getMainImage() === $name) {
-            $car->setMainImage(null);
-        }
-        if ($car->getSecondImage() === $name) {
-            $car->setSecondImage(null);
-        }
-        if ($car->getThirdImage() === $name) {
-            $car->setThirdImage(null);
-        }
-        if ($car->getFourthImage() === $name) {
-            $car->setFourthImage(null);
-        }
-        if ($car->getFifthImage() === $name) {
-            $car->setFifthImage(null);
-        }
+            unlink("$dir/$name");
 
-        $em->persist($car);
-        $em->flush();
+            if ($car->getMainImage() === $name) {
+                $car->setMainImage('Default/defaultImage1.jpg');
+                $result['code'] = 200;
+            }
+            if ($car->getSecondImage() === $name) {
+                $car->setSecondImage('Default/defaultImage2.jpg');
+                $result['code'] = 200;
+            }
+            if ($car->getThirdImage() === $name) {
+                $car->setThirdImage('Default/defaultImage3.jpg');
+                $result['code'] = 200;
+            }
+            if ($car->getFourthImage() === $name) {
+                $car->setFourthImage('Default/defaultImage4.jpg');
+                $result['code'] = 200;
+            }
+            if ($car->getFifthImage() === $name) {
+                $car->setFifthImage('Default/defaultImage5.jpg');
+                $result['code'] = 200;
+            }
 
-        return new JsonResponse($car);
+            $em->persist($car);
+            $em->flush();
+        }
+        return new JsonResponse($result);
     }
 }
