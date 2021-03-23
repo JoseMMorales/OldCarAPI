@@ -133,18 +133,12 @@ class PublishedCarController extends AbstractController
             'brand' => $car->getModel()->getBrand()->getBrandName(),
             'shortDescription' => $car->getShortDescription(),
             'longDescription' => $car->getLongDescription(),
-            'imageMain' => $car->getMainImage(),
-            'imageSecond' => $car->getSecondImage(),
-            'imageThird' => $car->getThirdImage(),
-            'imageFourth' => $car->getFourthImage(),
-            'imageFifth' => $car->getFifthImage(),
+            'imageMain' => $imageURL.$car->getMainImage(),
+            'imageSecond' => $imageURL.$car->getSecondImage(),
+            'imageThird' => $imageURL.$car->getThirdImage(),
+            'imageFourth' => $imageURL.$car->getFourthImage(),
+            'imageFifth' => $imageURL.$car->getFifthImage(),
         ];
-
-        $carObj['imageMain'] = $imageURL.$carObj['imageMain'];
-        $carObj['imageSecond'] = $imageURL.$carObj['imageSecond'];
-        $carObj['imageThird'] = $imageURL.$carObj['imageThird'];
-        $carObj['imageFourth'] = $imageURL.$carObj['imageFourth'];
-        $carObj['imageFifth'] = $imageURL.$carObj['imageFifth'];
 
         return new JsonResponse($carObj); 
     }
@@ -215,5 +209,74 @@ class PublishedCarController extends AbstractController
             $em->flush();
         }
         return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/update/image/{idCar}", name="data_user_update_image", methods={"POST"})
+     */
+    public function updateImage(
+        int $idCar,
+        Request $request,
+        CarsRepository $repoCar,
+        EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $car = $repoCar->find(['id' => $idCar]);
+        $model = $car->getModel()->getModelName();
+        $brand = $car->getModel()->getBrand()->getBrandName();
+
+        $photos[0] = $request->files->get('file0');
+        $photos[1] = $request->files->get('file1');
+        $photos[2] = $request->files->get('file2');
+        $photos[3] = $request->files->get('file3');
+        $photos[4] = $request->files->get('file4');
+
+        $photoNames = [];
+        $dir = $this->getParameter('photos_cars');
+
+        foreach ($photos as $key => $photo) {
+            $index = $key + 1; 
+
+            if (!$photo) {
+                $photoName = "Default/defaultImage$index.jpg";
+            } else {
+                $extension = $photo->getClientOriginalExtension();
+                $brandNotSpace = str_replace(' ', '', $brand);
+                $modelNotSpace = str_replace(' ', '', $model);
+                $photoName = "$brandNotSpace"."/$modelNotSpace"."/$idCar"."-IMG$index.$extension";
+                $photo->move($dir."$brandNotSpace"."/$modelNotSpace", $photoName);
+            }
+            $photoNames[] = $photoName;
+        };
+
+        $car->setMainImage($photoNames[0]);
+        $car->setSecondImage($photoNames[1]);
+        $car->setThirdImage($photoNames[2]);
+        $car->setFourthImage($photoNames[3]);
+        $car->setFifthImage($photoNames[4]);
+
+        $em->persist($car);
+        $em->flush();
+
+        $imageURL = $this->getParameter('photos_cars_URL');
+
+        $carObj = [
+            'code' => 200,
+            'idCar' => $car->getId(),
+            'km' => $car->getKm(),
+            'price' => $car->getCarPrice(),
+            'year' => $car->getCarYear(),
+            'model' => $car->getModel()->getModelName(),
+            'brand' => $car->getModel()->getBrand()->getBrandName(),
+            'shortDescription' => $car->getShortDescription(),
+            'longDescription' => $car->getLongDescription(),
+            'imageMain' => $imageURL.$car->getMainImage(),
+            'imageSecond' => $imageURL.$car->getSecondImage(),
+            'imageThird' => $imageURL.$car->getThirdImage(),
+            'imageFourth' => $imageURL.$car->getFourthImage(),
+            'imageFifth' => $imageURL.$car->getFifthImage(),
+        ];
+
+        return new JsonResponse($carObj);
     }
 }
