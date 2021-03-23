@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,9 +30,24 @@ class Brands
      */
     private $brandName;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Models::class, mappedBy="brand")
+     */
+    private $models;
+
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getModels(): ?Collection
+    {
+        return $this->models;
     }
 
     public function getBrandName(): ?string

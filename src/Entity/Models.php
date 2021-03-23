@@ -31,7 +31,7 @@ class Models
     /**
      * @var \Brands
      *
-     * @ORM\ManyToOne(targetEntity="Brands")
+     * @ORM\ManyToOne(targetEntity="Brands", inversedBy="models")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
      * })

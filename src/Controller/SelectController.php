@@ -24,20 +24,20 @@ class SelectController extends AbstractController
         EntityManagerInterface $em): Response
     {
         $brandName = $request->query->get('brand');
-        $brand = $repoBrand->findBy(['brandName' => $brandName]);
+        $brand = $repoBrand->findOneBy(['brandName' => $brandName]);
 
-        $response = [
-            'value' => $brand->getBrand(),
-            'label' => $brand,
-        ];
+        $models = $brand->getModels();
 
-        // $response = $em->createQueryBuilder()
-        //     ->select('model.modelName as label','model.modelName as value')
-        //     ->from('App:Brands', 'brand')
-        //     ->Join('brand.id', 'model')
-        //     ->where('brand.brandName = :brand')
-        //     ->setParameter('brand' , $brandName)
-        //     ->getQuery()->getResult();
+        $response = [];
+
+        foreach ($models as $model) {
+            $responseObj = [
+                'value' => $model->getModelName(),
+                'label' => $model->getModelName(),
+            ];
+
+            $response[] = $responseObj;
+        }
         
         return $this->json($response);
     }
