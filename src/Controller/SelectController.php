@@ -43,37 +43,37 @@ class SelectController extends AbstractController
     /**
      * @Route("/select/brand", name="select_brand")
      */
-    public function selectBrand(
-        Request $request,
-        BrandsRepository $repoBrand,
-        ModelsRepository $repoModel, 
-        EntityManagerInterface $em): Response
-    {
-        $modelName = $request->query->get('model');
-        $model = $repoModel->findOneBy(['modelName' => $modelName]);
+    // public function selectBrand(
+    //     Request $request,
+    //     BrandsRepository $repoBrand,
+    //     ModelsRepository $repoModel, 
+    //     EntityManagerInterface $em): Response
+    // {
+    //     $modelName = $request->query->get('model');
+    //     $model = $repoModel->findOneBy(['modelName' => $modelName]);
 
-        if (!$model) {
-            $brands = $repoBrand->findAll();
-            $response = [];
+    //     if (!$model) {
+    //         $brands = $repoBrand->findAll();
+    //         $response = [];
 
-            foreach ($brands as $brand) {
-                $responseObj = [
-                    'name' => "brand",
-                    'value' => $brand->getBrandName(),
-                    'label' => $brand->getBrandName(),
-                ];
-                $response[] = $responseObj;
-            }
-        } else {
-            $brand = $model->getBrand();
-            $brandName = $brand->getBrandName();
+    //         foreach ($brands as $brand) {
+    //             $responseObj = [
+    //                 'name' => "brand",
+    //                 'value' => $brand->getBrandName(),
+    //                 'label' => $brand->getBrandName(),
+    //             ];
+    //             $response[] = $responseObj;
+    //         }
+    //     } else {
+    //         $brand = $model->getBrand();
+    //         $brandName = $brand->getBrandName();
 
-            $response = [
-                'name' => "brand",
-                'value' => $brandName,
-                'label' => $brandName,
-            ];
-        }
-        return $this->json($response);
-    }
+    //         $response = [
+    //             'name' => "brand",
+    //             'value' => $brandName,
+    //             'label' => $brandName,
+    //         ];
+    //     }
+    //     return $this->json($response);
+    // }
 }
