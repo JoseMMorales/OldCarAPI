@@ -108,13 +108,30 @@ class PublishUserController extends AbstractController
         $em->flush();
 
         $imageURL = $this->getParameter('photos_cars_URL');
-        $imageName = $car->getMainImage();
+        $imageMain = $car->getMainImage();
+        $imageSecond = $car->getSecondImage();
+        $imageThird = $car->getThirdImage();
+        $imageFourth = $car->getFourthImage();
+        $imageFifth = $car->getFifthImage();
 
-        $imageConcatURL = $imageURL.$imageName;
+        $imageMainConcatURL = $imageURL.$imageMain;
+        $imageSecondConcatURL = $imageURL.$imageSecond;
+        $imageThirdConcatURL = $imageURL.$imageThird;
+        $imageFourthConcatURL = $imageURL.$imageFourth;
+        $imageFifthConcatURL = $imageURL.$imageFifth;
 
         $response = [
             'idCar'=> $car->getId(),
-            'imageMain'=> "$imageConcatURL",
+            'km' => $car->getKm(),
+            'price' => $car->getCarPrice(),
+            'year' => $car->getCarYear(),
+            'shortDescription' => $car->getShortDescription(),
+            'longDescription' => $car->getLongDescription(),
+            'imageMain' => $imageMainConcatURL,
+            'imageSecond' => $imageSecondConcatURL,
+            'imageThird' => $imageThirdConcatURL,
+            'imageFourth' => $imageFourthConcatURL,
+            'imageFifth' => $imageFifthConcatURL,
             'model' => $car->getModel()->getModelName(),
             'brand' => $car->getModel()->getBrand()->getBrandName()
         ];
