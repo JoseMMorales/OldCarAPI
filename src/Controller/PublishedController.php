@@ -96,8 +96,10 @@ class PublishedController extends AbstractController
         $name = $request->query->get('picture');
         $idCar = $request->query->get('idCar');
 
-        if (!$name instanceof Blob) {
-            $result['code'] = 200;
+        dump($name);
+
+        if ($name instanceof Blob) {
+            $result['code2'] = 200;
         } else {
             $qb = $em->getRepository('App:Cars')->createQueryBuilder('c');
             $qb ->select('c')
@@ -126,7 +128,7 @@ class PublishedController extends AbstractController
                 $carBrand = $car->getModel()->getBrand()->getBrandName();
     
                 $dir = $this->getParameter('photos_cars');
-    
+
                 unlink("$dir/$name");
     
                 if ($car->getMainImage() === $name) {

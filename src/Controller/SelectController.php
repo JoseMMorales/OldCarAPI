@@ -37,6 +37,8 @@ class SelectController extends AbstractController
             ];
             $response[] = $responseObj;
         }
+
+        dump($response);
         return $this->json($response);
     }
 }

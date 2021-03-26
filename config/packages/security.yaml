@@ -36,12 +36,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/login, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/user/data, roles: ROLE_USER }
         - { path: ^/user/update, roles: ROLE_USER }
         - { path: ^/user/delete, roles: ROLE_USER }
         - { path: ^/favourite, roles: ROLE_USER }
         - { path: ^/addFavourite, roles: ROLE_USER }
         - { path: ^/deleteFavourite, roles: ROLE_USER }
+        - { path: ^/published, roles: ROLE_USER }
+        - { path: ^/publish/user, roles: ROLE_USER }
         
 
