@@ -100,7 +100,6 @@ class UserController extends AbstractController
     {
         $username = $request->get('username');
         $type = $request->get('type');
-        $email = $request->get('email');
         $phone = $request->get('phone');
         $address = $request->get('address');
         $city = $request->get('city');
@@ -109,7 +108,6 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $user->setName($username);
         $user->setType($type);
-        $user->setEmail($email);
         $user->setPhone($phone);
         $user->setAddress($address);
         $user->setCity($city);
