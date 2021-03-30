@@ -96,10 +96,8 @@ class PublishedController extends AbstractController
         $name = $request->query->get('picture');
         $idCar = $request->query->get('idCar');
 
-        dump($name);
-
-        if ($name instanceof Blob) {
-            $result['code2'] = 200;
+        if ($name === "[object Blob]") {
+            $result['code'] = 200;
         } else {
             $qb = $em->getRepository('App:Cars')->createQueryBuilder('c');
             $qb ->select('c')
