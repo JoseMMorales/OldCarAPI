@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use App\Repository\UsersRepository;
-use App\Entity\Users;
+use App\Repository\CarsRepository;
+use App\Entity\Cars;
 
 class ContactController extends AbstractController
 {
@@ -18,7 +18,7 @@ class ContactController extends AbstractController
         int $id, 
         Request $request, 
         string $location, 
-        UsersRepository $repoUsers,
+        CarsRepository $repoCars,
         \Swift_Mailer $mailer): Response
     {
 
@@ -37,10 +37,11 @@ class ContactController extends AbstractController
         if($id === 0){
             $toEmail = 'oldcarcodespace@gmail.com';
         } else {
-            $user = $repoUsers->findOneBy(['id' => $id]);
+            $car = $repoCars->findOneBy(['id' => $id]);
+            $user = $car->getUser();
             $userEmail = $user->getEmail();
             $toEmail = $userEmail;
-        }
+        };
 
         $toLocation = '';
         $fromLocation = '';
