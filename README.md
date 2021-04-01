@@ -87,10 +87,10 @@ This following examples are based on user profile, where is retrieving user's da
 ## :exclamation::exclamation: Please note :exclamation::exclamation: 
 Just to advise that credentials at .env file are just being created to build the App, so it should be changed for you to use the repo accordingly with yours.
 
-* ROW 25. Change DDBB details:<br />
+* <b>ROW 25:</b> Change DDBB details:<br />
 DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
-* ROW 39: Change email account if you want to use Swift_Message in Gmail account:<br />
+* <b>ROW 39:</b> Change email account if you want to use Swift_Message in Gmail account:<br />
 MAILER_URL=gmail://username:password@localhost
 
 ## Author
