@@ -52,7 +52,14 @@ This following examples are based on user profile, where is retrieving user's da
 
 ![Screenshot 2021-04-01 at 17 50 31](https://user-images.githubusercontent.com/43299285/113320396-c3497e00-9312-11eb-909e-de8640df5bf6.png)
 
-## Installing
+## Creating Templates...
+[Twig](https://symfony.com/doc/current/templates.html) is a moderm template engine for PHP, it has been used by creating emails in two scenarios. First, when an user not registered in OldCar has published a car, confirming all details has been uploaded, and second for users who want to contact via email with OldCar Support aand seller in each advert.
+
+#### Have a look at...
+![Screenshot 2021-04-01 at 18 20 47](https://user-images.githubusercontent.com/43299285/113324095-fe4db080-9316-11eb-9c96-a61587451cd1.png)
+
+
+## Installing..
 * **Note that you should have installed PHP ^7.2.5 and composer to proceed with steps below**
 * Clone the project to your local directory
 * `$git clone https://github.com/JoseMMorales/OldCarAPI.git`
@@ -60,7 +67,7 @@ This following examples are based on user profile, where is retrieving user's da
 * `$composer install`
 * `$php -S localhost:8000 -t public/` ([PHP Local Server](https://www.php.net/manual/en/features.commandline.webserver.php))
 
-## :exclamation: :exclamation: Please note :exclamation: :exclamation: 
+## :exclamation::exclamation: Please note :exclamation::exclamation: 
 Just to advise that credentials at .env file are just being created to build the App, so it should be changed for you to use the repo accordingly with yours.
 
 * ROW 25. Change DDBB details:<br />
