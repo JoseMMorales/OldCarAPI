@@ -8,13 +8,13 @@ Back-end side of OldCar App, service created to respond all queries done by [Cli
 ![Screenshot 2021-04-01 at 12 38 59](https://user-images.githubusercontent.com/43299285/113282471-3fc66780-92e7-11eb-9f30-a9ad1507b05d.png)
 
 <h2 align="left">
-  <img src="https://user-images.githubusercontent.com/43299285/113305032-e9672200-9302-11eb-93b2-99687686883d.png" width="20">
+  <img src="https://user-images.githubusercontent.com/43299285/113305032-e9672200-9302-11eb-93b2-99687686883d.png" width="50">
   How to build the pillars...
 </h2>
 
 [Composer](https://getcomposer.org/) as main application-level package manager in PHP, it's a mandatory use it to shape your project adding dendencies as needed. All available bundles may be found at [packagist.org](https://packagist.org/) from getting started to New contributions.
 
-### Example API responses...
+## Example API responses...
 This following examples are based on user profile, where is retrieving user's data when has been logged in, updating details at user's profile and deleting user's profile. 
 
 #### Request...
@@ -39,6 +39,19 @@ This following examples are based on user profile, where is retrieving user's da
 * Type Declarations in entities and each controller route, avoiding any data not required is passed on through the DDBB.<br/> 
 * [JWT Authentication Bundle](https://github.com/lexik/LexikJWTAuthenticationBundle) Token authentication system to represent the user in a secure manner, configured by you to modify different features as wanted. 
 
+## Doctrine Query Languaje...
+[DQL](https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/reference/dql-doctrine-query-language.html) is a very powerful way to raise queries as an object model, switching relationships between entities combining different types of clauses getting results with Entity manager.
+
+### See below...
+
+<b>With functions </b>: In Published Controller a search will be done to find a specific image in five different columns (2 parameters).
+
+![Screenshot 2021-04-01 at 17 44 59](https://user-images.githubusercontent.com/43299285/113319709-05be8b00-9312-11eb-96f6-85d5c84a3887.png)
+
+<b>Without functions </b>: In Cars Repository the query is mixing tables info (4 tables) using join multiple passing a variable dinamically based on URL info.
+
+![Screenshot 2021-04-01 at 17 50 31](https://user-images.githubusercontent.com/43299285/113320396-c3497e00-9312-11eb-909e-de8640df5bf6.png)
+
 ## Installing
 * **Note that you should have installed PHP ^7.2.5 and composer to proceed with steps below**
 * Clone the project to your local directory
@@ -50,10 +63,10 @@ This following examples are based on user profile, where is retrieving user's da
 ## :exclamation: :exclamation: Please note :exclamation: :exclamation: 
 Just to advise that credentials at .env file are just being created to build the App, so it should be changed for you to use the repo accordingly with yours.
 
-* ROW 25. Change DDBB details:
+* ROW 25. Change DDBB details:<br />
 DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
-* ROW 39: Change email account if you want to use Swift_Message in Gmail account:
+* ROW 39: Change email account if you want to use Swift_Message in Gmail account:<br />
 MAILER_URL=gmail://username:password@localhost
 
 ## Author
