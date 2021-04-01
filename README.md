@@ -14,6 +14,8 @@ Back-end side of OldCar App, service created to respond all queries done by [Cli
 
 [Composer](https://getcomposer.org/) as main application-level package manager in PHP, it's a mandatory use it to shape your project adding dendencies as needed. All available bundles may be found at [packagist.org](https://packagist.org/) from getting started to New contributions.
 
+#### How to to use it [here ...](https://getcomposer.org/doc/01-basic-usage.md)
+
 ## Example API responses...
 This following examples are based on user profile, where is retrieving user's data when has been logged in, updating details at user's profile and deleting user's profile. 
 
