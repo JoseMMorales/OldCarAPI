@@ -37,11 +37,11 @@ This following examples are based on user profile, where is retrieving user's da
 ## Security in Back-end...
 #### :lock::lock: &nbsp; <b>API security is mission-critical to digital businesses as it is the most-frequent attack vector for enterprise web applications data breaches</b> &nbsp; :lock::lock: <br /> 
 
-* Secutiry access control has been set up in diferents paths to restrict any request to the API in users' areas are done by not registered. <br/>
+* Security access control has been set up in different paths to restrict any request to the API in users' areas are done by not registered. <br/>
 * Type Declarations in entities and each controller route, avoiding any data not required is passed on through the DDBB.<br/> 
 * [JWT Authentication Bundle](https://github.com/lexik/LexikJWTAuthenticationBundle) Token authentication system to represent the user in a secure manner, configured by you to modify different features as wanted. 
 
-## Doctrine Query Languaje...
+## Doctrine Query Language...
 [DQL](https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/reference/dql-doctrine-query-language.html) is a very powerful way to raise queries as an object model, switching relationships between entities combining different types of clauses getting results with Entity manager.
 
 ### See below...
@@ -50,12 +50,12 @@ This following examples are based on user profile, where is retrieving user's da
 
 ![Screenshot 2021-04-01 at 17 44 59](https://user-images.githubusercontent.com/43299285/113319709-05be8b00-9312-11eb-96f6-85d5c84a3887.png)
 
-<b>Without functions </b>: In Cars Repository the query is mixing tables info (4 tables) using join multiple passing a variable dinamically based on URL info.
+<b>Without functions </b>: In Cars Repository the query is mixing tables info (4 tables) using join multiple passing a variable dynamically based on URL info.
 
 ![Screenshot 2021-04-01 at 17 50 31](https://user-images.githubusercontent.com/43299285/113320396-c3497e00-9312-11eb-909e-de8640df5bf6.png)
 
 ## Creating Templates...
-[Twig](https://symfony.com/doc/current/templates.html) is a moderm template engine for PHP, it has been used by creating emails in two scenarios. First, when an user not registered in OldCar has published a car, confirming all details has been uploaded, and second for users who want to contact via email with OldCar Support aand seller in each advert.
+[Twig](https://symfony.com/doc/current/templates.html) is a modern template engine for PHP, it has been used by creating emails in two scenarios. First, when a user not registered in OldCar has published a car, confirming all details has been uploaded, and second for users who want to contact via email with OldCar Support and seller in each advert.
 
 #### Have a look at...
 ![Screenshot 2021-04-01 at 18 20 47](https://user-images.githubusercontent.com/43299285/113324095-fe4db080-9316-11eb-9c96-a61587451cd1.png)
