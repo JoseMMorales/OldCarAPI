@@ -31,7 +31,13 @@ This following examples are based on user profile, where is retrieving user's da
 #### Request...
 `POST - http://localhost:8000/user/update`
 #### Response...
-`{id: 11, name: "Vintage Car", email: "vintage@gmail.com", address: "Chausse de Ninove", city: "Bruges", …}`
+{<br />
+  &nbsp; id: 11,<br />
+  &nbsp; name: "Vintage Car", <br />
+  &nbsp; email: "vintage@gmail.com", <br />
+  &nbsp; address: "Chausse de Ninove", <br />
+  &nbsp; city: "Bruges", …<br />
+}<br />
 
 #### Request...
 `DELETE - http://localhost:8000/user/delete`
