@@ -48,7 +48,7 @@ This following examples are based on user profile, where is retrieving user's da
 
 #### Response...
 
-<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
+<div style="background-color: #C0C0C0; color: #000; border-radius: 5px; padding: 5px;">
   {<br />
     &nbsp; &nbsp;id: 11,<br />
     &nbsp; &nbsp;name: "Vintage Car", <br />
