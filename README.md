@@ -24,25 +24,53 @@ Back-end side of OldCar App, service created to respond all queries done by [Cli
 This following examples are based on user profile, where is retrieving user's data when has been logged in, updating details at user's profile and deleting user's profile. 
 
 #### Request...
-`GET - http://localhost:8000/user/data`
+
+<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
+  GET - http://localhost:8000/user/data
+</div>
+
 #### Response...
-`{id: 11, name: "Vintage Car", email: "vintage@gmail.com", address: "Chaussée de Ninove", city: "Anderlecht", …}`
+
+<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
+  {<br />
+  &nbsp; &nbsp;id: 11, <br />
+  &nbsp; &nbsp;name: "Vintage Car", <br />
+  &nbsp; &nbsp;email: "vintage@gmail.com", <br />
+  &nbsp; &nbsp;address: "Chaussée de Ninove", <br />
+  &nbsp; &nbsp;city: "Anderlecht", …<br />
+  }
+</div>
 
 #### Request...
-`POST - http://localhost:8000/user/update`
+<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
+  POST - http://localhost:8000/user/update
+</div>
+
 #### Response...
-{<br />
-  &nbsp; id: 11,<br />
-  &nbsp; name: "Vintage Car", <br />
-  &nbsp; email: "vintage@gmail.com", <br />
-  &nbsp; address: "Chausse de Ninove", <br />
-  &nbsp; city: "Bruges", …<br />
-}<br />
+
+<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
+  {<br />
+    &nbsp; &nbsp;id: 11,<br />
+    &nbsp; &nbsp;name: "Vintage Car", <br />
+    &nbsp; &nbsp;email: "vintage@gmail.com", <br />
+    &nbsp; &nbsp;address: "Chausse de Ninove", <br />
+    &nbsp; &nbsp;city: "Bruges", …<br />
+  }<br />
+</div>
 
 #### Request...
-`DELETE - http://localhost:8000/user/delete`
+
+<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
+  DELETE - http://localhost:8000/user/delete
+</div>
+
 #### Response...
-`{message: "Account deleted"}`
+
+<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
+  {<br />
+    &nbsp; &nbsp;message: "Account deleted"<br />
+  }<br />
+</div>
 
 ## Security in Back-end...
 #### :lock::lock: &nbsp; <b>API security is mission-critical to digital businesses as it is the most-frequent attack vector for enterprise web applications data breaches</b> &nbsp; :lock::lock: <br /> 
