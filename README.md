@@ -3,6 +3,8 @@
 
 ## About this project...
 Back-end side of OldCar App, service created to respond all queries done by [Client-side](https://en.wikipedia.org/wiki/Client-side#:~:text=Client%2Dside%20refers%20to%20operations,relationship%20in%20a%20computer%20network.) (ReactJS in this case) to keep logical standards and efficiency. Manipulating the resources as GET, POST and DELETE verbs to handle data, which return a response in JSON Format for a straight forward Front-end understanding.
+
+This API is a set of reusable components, so it has been utilised [Symfony](https://symfony.com/) which is one of the most important web application frameworks in PHP. Being an open source to everyone and able to build robust applications in an expresive context.
  
 ## Back End Stack...
 <div align="center">
