@@ -23,9 +23,9 @@ Back-end side of OldCar App, service created to respond all queries done by [Cli
 ## Example API responses...
 This following examples are based on user profile, where is retrieving user's data when has been logged in, updating details at user's profile and deleting user's profile. 
 
-#### Request...
+#### :question: Request...
 `GET - http://localhost:8000/user/data`
-#### Response...
+#### :arrow_right: Response...
 ```
 {
   id: 11,
@@ -35,37 +35,27 @@ This following examples are based on user profile, where is retrieving user's da
   city: "Anderlecht", …
 }
 ```
-#### Request...
-<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
-  POST - http://localhost:8000/user/update
-</div>
+#### :question: Request...
+`POST - http://localhost:8000/user/update`
+#### :arrow_right: Response...
+```
+  {
+    id: 11,
+    name: "Vintage Car", 
+    email: "vintage@gmail.com", 
+    address: "Chausse de Ninove", 
+    city: "Bruges", …
+  }
+```
 
-#### Response...
-
-<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
-  {<br />
-    &nbsp; &nbsp;id: 11,<br />
-    &nbsp; &nbsp;name: "Vintage Car", <br />
-    &nbsp; &nbsp;email: "vintage@gmail.com", <br />
-    &nbsp; &nbsp;address: "Chausse de Ninove", <br />
-    &nbsp; &nbsp;city: "Bruges", …<br />
-  }<br />
-</div>
-
-#### Request...
-
-<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
-  DELETE - http://localhost:8000/user/delete
-</div>
-
-#### Response...
-
-<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
-  {<br />
-    &nbsp; &nbsp;message: "Account deleted"<br />
-  }<br />
-</div>
-
+#### :question: Request...
+`DELETE - http://localhost:8000/user/delete`
+#### :arrow_right: Response...
+```
+  {
+    message: "Account deleted"
+  }
+```
 ## Security in Back-end...
 #### :lock::lock: &nbsp; <b>API security is mission-critical to digital businesses as it is the most-frequent attack vector for enterprise web applications data breaches</b> &nbsp; :lock::lock: <br /> 
 
