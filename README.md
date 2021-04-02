@@ -24,23 +24,17 @@ Back-end side of OldCar App, service created to respond all queries done by [Cli
 This following examples are based on user profile, where is retrieving user's data when has been logged in, updating details at user's profile and deleting user's profile. 
 
 #### Request...
-
-<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
-  GET - http://localhost:8000/user/data
-</div>
-
+`GET - http://localhost:8000/user/data`
 #### Response...
-
-<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
-  {<br />
-  &nbsp; &nbsp;id: 11, <br />
-  &nbsp; &nbsp;name: "Vintage Car", <br />
-  &nbsp; &nbsp;email: "vintage@gmail.com", <br />
-  &nbsp; &nbsp;address: "Chaussée de Ninove", <br />
-  &nbsp; &nbsp;city: "Anderlecht", …<br />
-  }
-</div>
-
+```
+{
+  id: 11,
+  name: "Vintage Car",
+  email: "vintage@gmail.com",
+  address: "Chaussée de Ninove", 
+  city: "Anderlecht", …
+}
+```
 #### Request...
 <div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
   POST - http://localhost:8000/user/update
@@ -48,7 +42,7 @@ This following examples are based on user profile, where is retrieving user's da
 
 #### Response...
 
-<div style="background-color: #000; color: #000; border-radius: 5px; padding: 5px;">
+<div style="background-color: #E0E0E0; color: #000; border-radius: 5px; padding: 5px;">
   {<br />
     &nbsp; &nbsp;id: 11,<br />
     &nbsp; &nbsp;name: "Vintage Car", <br />
