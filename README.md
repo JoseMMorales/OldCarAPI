@@ -24,19 +24,9 @@ Back-end side of OldCar App, service created to respond all queries done by [Cli
 This following examples are based on user profile, where is retrieving user's data when has been logged in, updating details at user's profile and deleting user's profile. 
 
 #### Request...
-
-| GET - http://localhost:8000/user/data |
-| --- |
-
+`GET - http://localhost:8000/user/data`
 #### Response...
-|{
-  id: 11, 
-  name: "Vintage Car", 
-  email: "vintage@gmail.com", 
-  address: "Chaussée de Ninove", 
-  city: "Anderlecht", ...
-}|
-| --- |
+`{id: 11, name: "Vintage Car", email: "vintage@gmail.com", address: "Chaussée de Ninove", city: "Anderlecht", …}`
 
 #### Request...
 `POST - http://localhost:8000/user/update`
