@@ -51,42 +51,54 @@ class UserController extends AbstractController
         $password = $request->get('password');
 
         $user = $repoUsers->findOneBy(['email' => $email]);
+        $active = $user->getActive();
 
-        if ($user) {
+        dump($active);
+
+        if ($user && ($active === true)) {
             $messageNo = 'Usuario creado en Database, inténtalo otra vez!!';
             $response = [
-                'message' => $messageNo , 
+                'message' => $messageNo, 
                 'code' => 400
             ];
+        } else if ($user && ($active === false)) {
+            $user->setActive(1);
+            $user->setName($username);
+            $response = $this->creatingUsers($user, $em, $encoder, $password);
         } else {
             $user = new Users();
             $user->setActive(1);
             $user->setName($username);
             $user->setEmail($email);
             $user->setRoles([]);
-    
-            $plainPassword = $password;
-            $encoded = $encoder->encodePassword($user, $plainPassword);
-            $user->setPassword($encoded);
-    
-            $em->persist($user);
-            $em->flush();
-
-            $messageOk = 'Usuario creado!!';
-    
-            $response = [
-                'message' => $messageOk , 
-                'code' => 200,
-                'id' => $user-> getId(),
-                'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'address' => $user->getAddress(),
-                'city' => $user->getCity(),
-                'phone' => $user->getPhone(),
-                'type' => $user->getType()
-            ];
+            $response = $this->creatingUsers($user, $em, $encoder, $password);        
         }
         return $this->json($response);
+    }
+
+    private function creatingUsers($user, $em, $encoder, $password)
+    {
+        $plainPassword = $password;
+        $encoded = $encoder->encodePassword($user, $plainPassword);
+        $user->setPassword($encoded);
+
+        $em->persist($user);
+        $em->flush();
+
+        $messageOk = 'Usuario creado!!';
+
+        $response = [
+            'message' => $messageOk , 
+            'code' => 200,
+            'id' => $user-> getId(),
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'address' => $user->getAddress(),
+            'city' => $user->getCity(),
+            'phone' => $user->getPhone(),
+            'type' => $user->getType()
+        ];
+        return $response;
     }
 
     /**
