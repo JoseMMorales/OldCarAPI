@@ -69,7 +69,7 @@ class PublishNotUserController extends AbstractController
         }
         
         $car = new Cars();
-        $car->setActive(0);
+        $car->setActive(1);
         $car->setCarYear($year);
         $car->setKm($km);
         $car->setShortDescription($shortDescription);
