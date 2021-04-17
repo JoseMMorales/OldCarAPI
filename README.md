@@ -103,6 +103,7 @@ This following examples are based on user profile, where is retrieving user's da
 * `$cd OldCarAPI`
 * `$composer install`
 * `$php -S localhost:8000 -t public/` ([PHP Local Server](https://www.php.net/manual/en/features.commandline.webserver.php))
+* `php bin/console lexik:jwt:generate-keypair` to generate JWT SSL keys to log in and register functionalities.
 
 ## :exclamation::exclamation: Please note :exclamation::exclamation: 
 Just to advise that credentials at .env file are just being created to build the App, so it should be changed for you to use the repo accordingly with yours.
